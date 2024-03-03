@@ -1,0 +1,32 @@
+{
+  "name": "ecomerce-api",
+  "version": "1.0.0",
+  "description": "This is a personal project that consists of developing an API for e-commerce, that will be used in a webpage and an Android App.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flody27/Ecomerce-Api.git"
+  },
+  "keywords": [
+    "API",
+    "ECOMMERCE",
+    "NODEJS",
+    "NOSQL",
+    "MONGODB"
+  ],
+  "author": "Diego Andres Valle Valle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flody27/Ecomerce-Api/issues"
+  },
+  "homepage": "https://github.com/Flody27/Ecomerce-Api#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "mongoose": "^8.2.0"
+  }
+}
