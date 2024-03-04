@@ -17,4 +17,6 @@ mongoose
     console.error(`Upps there was an error ${error}`);
   });
 
-  
+// Routes
+require("./app/routes/products.routes")(app);
+require("./app/routes/commentProduct.routes")(app);
