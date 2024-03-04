@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const config = require("./database");
 
 const app = express();
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.listen("8000", () => {
   console.log("Starting server in port 8000");

@@ -1,6 +1,6 @@
 const ProductModel = require("../models/product.model");
 
-exports.getProducts = async (res) => {
+exports.getProducts = async (req,res) => {
   ProductModel.find()
     .then((result) => {
       console.log("Listing products");
