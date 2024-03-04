@@ -1,8 +1,7 @@
-const productModel = require("../models/product.model");
+const ProductModel = require("../models/product.model");
 
 exports.getProducts = async (res) => {
-  productModel
-    .find()
+  ProductModel.find()
     .then((result) => {
       console.log("Listing products");
       res.send(result);
@@ -16,8 +15,7 @@ exports.getProducts = async (res) => {
 };
 
 exports.getProductByID = async (req, res) => {
-  productModel
-    .findById(req.params.id)
+  ProductModel.findById(req.params.id)
     .then((result) => {
       console.log("Listing product");
       res.send(result);
@@ -45,7 +43,7 @@ exports.createProduct = async (req, res) => {
     ratings,
   } = req.body;
 
-  const Product = new productModel({
+  const Product = new ProductModel({
     name,
     description,
     price,
@@ -60,7 +58,7 @@ exports.createProduct = async (req, res) => {
   });
 
   Product.save()
-    .then(async () => {
+    .then(() => {
       console.log("Registering product");
       res.send({ message: "Product successfully registered" });
     })
@@ -87,24 +85,23 @@ exports.editProduct = async (req, res) => {
     ratings,
   } = req.body;
 
-  productModel
-    .findByIdAndUpdate(
-      req.params.id,
-      {
-        name,
-        description,
-        price,
-        discount,
-        brand,
-        category,
-        quantity,
-        images,
-        tags,
-        favorites,
-        ratings,
-      },
-      { new: true }
-    )
+  ProductModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      name,
+      description,
+      price,
+      discount,
+      brand,
+      category,
+      quantity,
+      images,
+      tags,
+      favorites,
+      ratings,
+    },
+    { new: true }
+  )
     .then(() => {
       console.log("Updating product");
       res.send({ message: "The product was successfully updated" });
@@ -118,8 +115,7 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
-  productModel
-    .findByIdAndRemove(req.params.id)
+  ProductModel.findByIdAndRemove(req.params.id)
     .then(() => {
       console.log("deleting the product");
       res.send({ message: "The product was successfully deleted" });
