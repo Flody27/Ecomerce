@@ -22,3 +22,4 @@ mongoose
 // Routes
 require("./app/routes/products.routes")(app);
 require("./app/routes/commentProduct.routes")(app);
+require("./app/routes/categoryProduct.routes")(app);

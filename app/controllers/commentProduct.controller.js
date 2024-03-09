@@ -13,13 +13,13 @@ exports.createProductComment = async (req, res) => {
 
   Comment.save()
     .then(() => {
-      console.log("Registering the comment");
-      res.send({ message: "Comment successfully registered" });
+      console.log("Registering the comment.");
+      res.send({ message: "Comment successfully registered." });
     })
     .catch((err) => {
-      console.log("There was an error registering the comment", err);
+      console.log("There was an error registering the comment.", err);
       res.status(500).send({
-        message: err.message || "There was an error registering the comment",
+        message: err.message || "There was an error registering the comment.",
       });
     });
 };
@@ -39,13 +39,13 @@ exports.editProductComment = async (req, res) => {
     { new: true }
   )
     .then(() => {
-      console.log("Updating comment");
-      res.send({ message: "The comment was successfully updated" });
+      console.log("Updating comment.");
+      res.send({ message: "The comment was successfully updated." });
     })
     .catch((err) => {
-      console.log("There was an error updating the comment", err);
+      console.log("There was an error updating the comment.", err);
       res.status(500).send({
-        message: err.message || "There was an error updating the comment",
+        message: err.message || "There was an error updating the comment.",
       });
     });
 };
@@ -53,13 +53,13 @@ exports.editProductComment = async (req, res) => {
 exports.deleteProductComment = async (req, res) => {
   CommentProductModel.findByIdAndRemove(req.params.id)
     .then(() => {
-      console.log("deleting the comment");
-      res.send({ message: "The comment was successfully deleted" });
+      console.log("deleting the comment.");
+      res.send({ message: "The comment was successfully deleted." });
     })
     .catch((err) => {
-      console.log("There was an error deleting the comment", err);
+      console.log("There was an error deleting the comment.", err);
       res.status(500).send({
-        message: err.message || "There was an error deleting the comment",
+        message: err.message || "There was an error deleting the comment.",
       });
     });
 };
