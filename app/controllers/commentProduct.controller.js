@@ -51,7 +51,7 @@ exports.editProductComment = async (req, res) => {
 };
 
 exports.deleteProductComment = async (req, res) => {
-  CommentProductModel.findByIdAndRemove(req.params.id)
+  CommentProductModel.findByIdAndDelete(req.params.id)
     .then(() => {
       console.log("deleting the comment.");
       res.send({ message: "The comment was successfully deleted." });

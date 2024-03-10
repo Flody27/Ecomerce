@@ -115,7 +115,7 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
-  ProductModel.findByIdAndRemove(req.params.id)
+  ProductModel.findByIdAndDelete(req.params.id)
     .then(() => {
       console.log("deleting the product.");
       res.send({ message: "The product was successfully deleted." });

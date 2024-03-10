@@ -60,7 +60,7 @@ exports.createUser = async (req, res) => {
   Product.save()
     .then(() => {
       console.log("Registering user.");
-      res.send({ message: "Product successfully registered." });
+      res.send({ message: "User successfully registered." });
     })
     .catch((err) => {
       console.log("There was an error registering the user.", err);
@@ -115,7 +115,7 @@ exports.editUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  UserModel.findByIdAndRemove(req.params.id)
+  UserModel.findByIdAndDelete(req.params.id)
     .then(() => {
       console.log("deleting the user.");
       res.send({ message: "The user was successfully deleted." });

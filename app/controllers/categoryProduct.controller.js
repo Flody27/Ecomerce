@@ -57,7 +57,7 @@ exports.editCategory = async (req, res) => {
 };
 
 exports.deleteCategory = async (req, res) => {
-  CategoryModel.findByIdAndRemove(req.params.id)
+  CategoryModel.findByIdAndDelete(req.params.id)
     .then(() => {
       console.log("deleting the category.");
       res.send({ message: "The category was successfully deleted." });
