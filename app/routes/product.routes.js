@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const product = require("../controllers/products.controller");
+  const product = require("../controllers/product.controller");
 
   app.get("/getProducts", product.getProducts);
 
