@@ -1,6 +1,7 @@
 import Sidebar from "./Sidebar";
 
 export default function Layout({ children, title = "TechShop" }) {
+  window.document.title = `TechShop - ${title}`;
   return (
     <>
       {/* NAV */}
@@ -26,16 +27,6 @@ export default function Layout({ children, title = "TechShop" }) {
               </li>
             </ul>
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item hidden-xs">
-                <form className="form-inline main_search">
-                  <input
-                    className="form-control form-control-sm mr-sm-2"
-                    type="search"
-                    placeholder="Buscar"
-                    aria-label="Buscar"
-                  />
-                </form>
-              </li>
               <li className="nav-item">
                 <a className="nav-link nav-link-icon" href="#">
                   <i className="fa fa-cogs" />
@@ -114,10 +105,7 @@ export default function Layout({ children, title = "TechShop" }) {
                     </a>
                   </div>
                   <div className="py-3 text-center">
-                    <a
-                      href="#"
-                      className="link link-sm link--style-3"
-                    >
+                    <a href="#" className="link link-sm link--style-3">
                       View all notifications
                     </a>
                   </div>
@@ -174,166 +162,7 @@ export default function Layout({ children, title = "TechShop" }) {
         <Sidebar />
 
         {/* MAINPAGE */}
-        <div className="page">
-          {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="#">
-              Dashboard
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <i className="fa fa-align-justify" />
-            </button>
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Application
-                  </a>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Inbox
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      Calendar
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      TaskBoard
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Chat App
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Contacts
-                    </a>
-                  </div>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Users
-                  </a>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Profile
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      Timeline
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Invoices
-                    </a>
-                  </div>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Pages
-                  </a>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Stater page
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      Pricing
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Search
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Testimonials
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Map
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Icon
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Carousel
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Gallery
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Lookup
-                    </a>
-                  </div>
-                </li>
-              </ul>
-              <form className="form-inline my-2 my-lg-0">
-                <button type="button" className="btn btn-primary">
-                  Add
-                </button>
-                <a
-                  href="https://themeforest.net/user/wrraptheme/portfolio"
-                  title="Portfolio"
-                  className="btn btn-success ml-2"
-                >
-                  Portfolio
-                </a>
-              </form>
-            </div>
-          </nav>
-          <div className="container-fluid">
-
-            <div className="row clearfix">
-              <div className="col-lg-3 col-md-6 col-sm-12">
-                <div className="card widget_2 big_icon traffic">
-                  <div className="body">
-                    <h6>Traffic</h6>
-                    <h2>
-                      20 <small className="info">of 1Tb</small>
-                    </h2>
-                    <small>2% higher than last month</small>
-                    <div className="progress mb-0">
-                      <div
-                        className="progress-bar bg-orange"
-                        role="progressbar"
-                        aria-valuenow={45}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        style={{ width: "45%" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-          {children}
-        </div>
+        <div className="page">{children}</div>
       </div>
     </>
   );

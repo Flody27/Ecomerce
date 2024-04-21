@@ -5,9 +5,7 @@ export default function Sidebar() {
         <nav className="sidebar">
           <div className="user-info">
             <div className="image">
-              <a href="#;">
-                <img src="../assets/images/logo.png" alt="User" />
-              </a>
+              <img src="../assets/images/logo.png" alt="User" />
             </div>
             <div className="detail mt-3">
               <h5 className="mb-0">user name</h5>
@@ -17,18 +15,25 @@ export default function Sidebar() {
           <ul id="main-menu" className="metismenu">
             <li className="g_heading">General</li>
             <li className="active">
-              <a href="index.html">
+              <a href="/">
                 <i className="ti-home" />
                 <span>Panel de control</span>
               </a>
             </li>
-            <li className="g_heading">Desplegable</li>
+            <li className="g_heading">E-Commerce</li>
+            <li className="">
+              <a href="/Productos">Productos</a>
+            </li>
+            <li className="">
+              <a href="/Users">Usuarios</a>
+            </li>
+            {/* <li className="g_heading">Desplegable</li>
             <li>
               <a href="#" className="has-arrow">
                 <i className="ti-pie-chart" />
                 <span>Desplegable</span>
               </a>
-              <ul>
+              <ul className="options-sidebar-menu">
                 <li>
                   <a href="">Ejemplo</a>
                 </li>
@@ -39,7 +44,7 @@ export default function Sidebar() {
                   <a href="">Ejemplo</a>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

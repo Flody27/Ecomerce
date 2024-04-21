@@ -17689,19 +17689,19 @@ body *:hover::-webkit-scrollbar-thumb {
 }
 
 .theme-indigo .custom-navbar {
-    background: #6574cd
+    background: #2A678C
 }
 
 .theme-indigo .metismenu>li.active a {
-    background: rgba(101, 116, 205, 0.2);
-    color: #6574cd
+    background: #68bbed3b;
+    color: #2A678C
 }
 
 .theme-indigo .metismenu a:hover,
 .theme-indigo .metismenu a:active,
 .theme-indigo .metismenu a:focus {
-    background: rgba(101, 116, 205, 0.2);
-    color: #6574cd
+    background: #68bbed3b;
+    color: #2A678C
 }
 
 .main_search {
@@ -17818,7 +17818,7 @@ body *:hover::-webkit-scrollbar-thumb {
 }
 
 .navbar-brand:hover {
-    color: #fff
+    color: #000;
 }
 
 .navbar-brand img {
@@ -19386,4 +19386,45 @@ body *:hover::-webkit-scrollbar-thumb {
     font-size: 1rem;
     margin-left: 5px;
     font-weight: 600
+}
+
+.prod-card {
+    margin: 0 5px 30px 5px;
+}
+
+.prod-card p {
+    margin: 10px 0;
+}
+
+.prod-card .card-body {
+    padding: 1rem;
+}
+
+.img-product {
+    height: 220px;
+    /* height: 10rem; */
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.product-link p {
+    text-decoration: none;
+    color: #000;
+}
+
+.btn-dropdown {
+    color: #495057;
+    background-color: transparent;
+    background-image: none;
+    border-color: #ced4da;
+}
+
+.btn-dropdown:hover,
+.btn-dropdown:focus {
+    background-color: #ced4da;
+}
+
+.options-sidebar-menu li:hover {
+    background: #68bbed3b;
 }
