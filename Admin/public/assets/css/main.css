@@ -19428,3 +19428,95 @@ body *:hover::-webkit-scrollbar-thumb {
 .options-sidebar-menu li:hover {
     background: #68bbed3b;
 }
+
+.input-img {
+    display: none;
+}
+
+.input-card-img {
+    background: #e8e8e8;
+    width: 180px;
+    height: 180px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.img-card {
+    width: 180px;
+    height: 180px;
+}
+
+.img-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.btn-img-delete {
+    display: none;
+    border-radius: 100%;
+    padding: 10px;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: x-large;
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.btn-img-delete i {
+    line-height: 0;
+}
+
+.img-card:hover .btn-img-delete {
+    display: block;
+}
+
+.img-card:hover {
+    filter: brightness(80%);
+}
+
+.input-card-img:hover {
+    background: #cdcccc;
+}
+
+.input-card-img .ti-cloud-up {
+    font-size: xx-large;
+}
+
+.card-tag {
+    background: #e8e8e8;
+    border: none;
+    margin: 10px;
+    border-radius: 10px;
+    display: inline-flex;
+    justify-content: center;
+    width: fit-content;
+    padding: 5px;
+    height: 32px;
+}
+
+.card-tag p {
+    margin: 0 10px;
+}
+
+.card-tag button {
+    border: none;
+    border-radius: 100%;
+    line-height: 0;
+    font-size: small;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.card-tag:hover button {
+    color: var(--red);
+}

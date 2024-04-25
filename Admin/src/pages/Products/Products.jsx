@@ -52,14 +52,19 @@ export default function Products() {
           <button className="btn btn-secondary mx-1" type="button">
             Exportar
           </button>
-          <button className="btn btn-primary mx-1" type="button">
+          <a
+            href="/AgregarProducto"
+            className="btn btn-primary mx-1"
+            type="button"
+          >
             Agregar
-          </button>
+          </a>
         </div>
       </nav>
 
       <div className="container-fluid">
         <div className="row clearfix">
+          {/* Utils */}
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card p-2">
               <div className="row">
@@ -67,8 +72,8 @@ export default function Products() {
                   <input
                     className="form-control w-75"
                     type="search"
-                    placeholder="Search"
-                    aria-label="Search"
+                    placeholder="Buscar"
+                    aria-label="Buscar"
                   />
                 </div>
 
@@ -126,7 +131,10 @@ export default function Products() {
                 return (
                   <div className="m-1" key={producto._id}>
                     <div className="card prod-card" style={{ width: "14rem" }}>
-                      <a href="LinkInfoProducto" className="product-link">
+                      <a
+                        href={`/${producto.name}/${producto._id}`}
+                        className="product-link"
+                      >
                         <img
                           src={producto.images[0]}
                           className="card-img-top img-product"
@@ -134,14 +142,17 @@ export default function Products() {
                         />
                       </a>
                       <div className="card-body">
-                        <a href="LinkInfoProducto" className="product-link">
+                        <a
+                          href={`/${producto.name}/${producto._id}`}
+                          className="product-link"
+                        >
                           <h5>{producto.name}</h5>
                           <p>Precio: ${producto.price}</p>
                           <p>Disponibles: {producto.quantity}</p>
                         </a>
                         <div className="row d-flex justify-content-center">
                           <a
-                            href="f"
+                            href={`/EditarProducto/${producto._id}`}
                             className="btn btn-sm btn-outline-dark col-5 mx-1"
                           >
                             Editar
