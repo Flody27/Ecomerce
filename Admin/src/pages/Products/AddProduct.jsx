@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import { Create, Get } from "../../Services/Api";
-import { object, string, number, array } from "yup";
+import { Create, Get, Multimedia } from "../../Services/Api";
+// import { object, string, number, array } from "yup";
 
 export default function AddProduct() {
   const title = "Agregar Producto";
 
-  const [images, setImages] = useState([]);
+  const [imagesUI, setImagesUI] = useState([]);
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tag, setTag] = useState("");
@@ -23,27 +23,27 @@ export default function AddProduct() {
     tags: [],
   });
 
-  const schemaProduct = object({
-    name: string()
-      .required("El campo nombre es obligatorio")
-      .typeError("Valor incorrecto en el campo Nombre"),
-    description: string()
-      .required("El campo detalles es obligatorio")
-      .typeError("Valor incorrecto en el campo detalles"),
-    price: number()
-      .typeError("El valor del campo precio debe ser numerico")
-      .required("El campo precio es obligatorio"),
-    discount: number().typeError("El valor del campo precio debe ser numerico"),
-    brand: string()
-      .required("El campo marca es obligatorio")
-      .typeError("Valor incorrecto en el campo marca"),
-    category: string().required("El campo categoria es obligatorio"),
-    quantity: number()
-      .typeError("El valor del campo cantidad debe ser numerico")
-      .required("El campo cantidad es obligatorio"),
-    images: array().min(1, "Debe agregar al menos una imagen"),
-    tags: array,
-  });
+  // const schemaProduct = object({
+  //   name: string()
+  //     .required("El campo nombre es obligatorio")
+  //     .typeError("Valor incorrecto en el campo Nombre"),
+  //   description: string()
+  //     .required("El campo detalles es obligatorio")
+  //     .typeError("Valor incorrecto en el campo detalles"),
+  //   price: number()
+  //     .typeError("El valor del campo precio debe ser numerico")
+  //     .required("El campo precio es obligatorio"),
+  //   discount: number().typeError("El valor del campo precio debe ser numerico"),
+  //   brand: string()
+  //     .required("El campo marca es obligatorio")
+  //     .typeError("Valor incorrecto en el campo marca"),
+  //   category: string().required("El campo categoria es obligatorio"),
+  //   quantity: number()
+  //     .typeError("El valor del campo cantidad debe ser numerico")
+  //     .required("El campo cantidad es obligatorio"),
+  //   images: array().min(1, "Debe agregar al menos una imagen"),
+  //   tags: array,
+  // });
 
   useEffect(() => {
     GetCategories();
@@ -68,11 +68,17 @@ export default function AddProduct() {
     const imagesArray = filesArray.map((file) => {
       return URL.createObjectURL(file);
     });
-    setImages((img) => img.concat(imagesArray));
+    console.log(filesArray);
+    setImagesUI((img) => img.concat(imagesArray));
+    setProduct({ ...product, images: filesArray });
   }
 
-  function DeleteImage(imgremove) {
-    setImages((img) => img.filter((x) => x != imgremove));
+  function DeleteImage(index) {
+    setImagesUI((img) => img.filter((_, i) => i !== index));
+    setProduct({
+      ...product,
+      images: product.images.filter((_, i) => i !== index),
+    });
   }
 
   function AddTag(event) {
@@ -87,14 +93,43 @@ export default function AddProduct() {
     setTags((tag) => tag.filter((x) => x != tagremove));
   }
 
-  function HandleSubmit() {}
+  function HandleSubmit() {
+    const formData = new FormData();
+
+    let imagesUpload = true;
+
+    product.images.forEach((img) => {
+      formData.append("images", img);
+    });
+
+    Multimedia("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => {
+        setProduct({ ...product, images: response.data });
+      })
+      .catch((error) => {
+        imagesUpload = false;
+        console.error("Error uploading files:", error);
+      });
+
+    if (!imagesUpload) {
+      console.log("error");
+    }
+
+    Create("/addProduct", product).then(() => {
+      window.location = "/Productos";
+    });
+  }
 
   return (
     <Layout title={title}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">
-            <form className="card" noValidate autoSave="false">
+            <form className="card" noValidate autoSave="false" id="formData">
               <div className="body row">
                 <div className="form-group mb-3 col-12">
                   <b>Nombre</b>
@@ -226,15 +261,15 @@ export default function AddProduct() {
                 <div className="form-group mb-3 col-12">
                   <b>Imagenes</b>
                   <div className="row">
-                    {images.map((img, key) => {
+                    {imagesUI.map((img, index) => {
                       return (
-                        <div className="col-4" key={key}>
+                        <div className="col-4" key={index}>
                           <div className="card img-card">
                             <img src={img} alt="" />
                             <button
                               type="button"
                               onClick={() => {
-                                DeleteImage(img);
+                                DeleteImage(index);
                               }}
                               className="btn-img-delete"
                             >
@@ -255,6 +290,7 @@ export default function AddProduct() {
                         type="file"
                         accept="image/*"
                         id="images"
+                        value={""}
                         onChange={AddImage}
                         className="input-img"
                         multiple
@@ -263,7 +299,11 @@ export default function AddProduct() {
                   </div>
                 </div>
                 <div className="col-12">
-                  <button type="button" className="btn btn-primary w-100">
+                  <button
+                    type="button"
+                    className="btn btn-primary w-100"
+                    onClick={() => HandleSubmit()}
+                  >
                     Agregar
                   </button>
                 </div>

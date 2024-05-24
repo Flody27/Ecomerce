@@ -21,3 +21,7 @@ export async function Update(url, object) {
 export async function Remove(url, id) {
   return await axios.delete(`${baseUrl}${url}/${id}`);
 }
+
+export async function Multimedia(url, media, params) {
+  return await axios.post(`${baseUrl}${url}`, media, params);
+}

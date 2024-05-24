@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 export default function Products() {
   const title = "Productos";
   const [productos, setProducts] = useState([]);
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     getProducts();
@@ -136,7 +137,7 @@ export default function Products() {
                         className="product-link"
                       >
                         <img
-                          src={producto.images[0]}
+                          src={`${baseUrl}/${producto.images[0]}`}
                           className="card-img-top img-product"
                           alt=""
                         />

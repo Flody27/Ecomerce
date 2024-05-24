@@ -1,6 +1,6 @@
 const ProductModel = require("../models/product.model");
-
-exports.getProducts = async (req,res) => {
+const { upload } = require("../utils/ImagesHandler");
+exports.getProducts = async (req, res) => {
   ProductModel.find()
     .then((result) => {
       console.log("Listing products.");
