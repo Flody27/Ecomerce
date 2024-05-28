@@ -29,7 +29,7 @@ const productSchema = mongoose.Schema(
       required: [true, "The category of the product is required."],
     },
     quantity: { type: Number, default: 0 },
-    images: [String],
+    images: [],
     tags: [String],
     favorites: { type: Number },
     ratings: { type: Number },

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import { Create, Get, Multimedia } from "../../Services/Api";
-// import { object, string, number, array } from "yup";
+import { Create, Get } from "../../Services/Api";
+import { object, string, number, array } from "yup";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export default function AddProduct() {
   const title = "Agregar Producto";
@@ -23,27 +25,27 @@ export default function AddProduct() {
     tags: [],
   });
 
-  // const schemaProduct = object({
-  //   name: string()
-  //     .required("El campo nombre es obligatorio")
-  //     .typeError("Valor incorrecto en el campo Nombre"),
-  //   description: string()
-  //     .required("El campo detalles es obligatorio")
-  //     .typeError("Valor incorrecto en el campo detalles"),
-  //   price: number()
-  //     .typeError("El valor del campo precio debe ser numerico")
-  //     .required("El campo precio es obligatorio"),
-  //   discount: number().typeError("El valor del campo precio debe ser numerico"),
-  //   brand: string()
-  //     .required("El campo marca es obligatorio")
-  //     .typeError("Valor incorrecto en el campo marca"),
-  //   category: string().required("El campo categoria es obligatorio"),
-  //   quantity: number()
-  //     .typeError("El valor del campo cantidad debe ser numerico")
-  //     .required("El campo cantidad es obligatorio"),
-  //   images: array().min(1, "Debe agregar al menos una imagen"),
-  //   tags: array,
-  // });
+  const schemaProduct = object().shape({
+    name: string()
+      .required("El campo nombre es obligatorio")
+      .typeError("Valor incorrecto en el campo Nombre"),
+    description: string()
+      .required("El campo detalles es obligatorio")
+      .typeError("Valor incorrecto en el campo detalles"),
+    price: number()
+      .typeError("El valor del campo precio debe ser numerico")
+      .required("El campo precio es obligatorio"),
+    discount: number().typeError("El valor del campo precio debe ser numerico"),
+    brand: string()
+      .required("El campo marca es obligatorio")
+      .typeError("Valor incorrecto en el campo marca"),
+    category: string().required("El campo categoria es obligatorio"),
+    quantity: number()
+      .typeError("El valor del campo cantidad debe ser numerico")
+      .required("El campo cantidad es obligatorio"),
+    images: array().min(1, "Debe agregar al menos una imagen"),
+    tags: array(),
+  });
 
   useEffect(() => {
     GetCategories();
@@ -93,35 +95,53 @@ export default function AddProduct() {
     setTags((tag) => tag.filter((x) => x != tagremove));
   }
 
-  function HandleSubmit() {
-    const formData = new FormData();
+  async function HandleSubmit() {
+    try {
+      await schemaProduct.validate(product, { abortEarly: false });
 
-    let imagesUpload = true;
-
-    product.images.forEach((img) => {
-      formData.append("images", img);
-    });
-
-    Multimedia("/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => {
-        setProduct({ ...product, images: response.data });
-      })
-      .catch((error) => {
-        imagesUpload = false;
-        console.error("Error uploading files:", error);
+      const formData = new FormData();
+      product.images.forEach((img) => {
+        formData.append("images", img);
       });
 
-    if (!imagesUpload) {
-      console.log("error");
-    }
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    Create("/addProduct", product).then(() => {
-      window.location = "/Productos";
-    });
+      const uploadedImageNames = response.data;
+
+      const updatedProduct = {
+        ...product,
+        images: uploadedImageNames,
+      };
+
+      await Create("/addProduct", updatedProduct);
+
+      Swal.fire("Éxito", "Producto registrado exitosamente", "success").then(
+        () => {
+          window.location = "/Productos";
+        }
+      );
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        let message = "";
+        error.inner.forEach((err) => {
+          message += `<p>${err.message}<p/>`;
+        });
+        Swal.fire("Oops", message, "error");
+      } else if (axios.isAxiosError(error)) {
+        Swal.fire("Error subiendo imágenes", error.message, "error");
+      } else {
+        Swal.fire("Error", error.message, "error");
+      }
+      console.error("Error:", error);
+    }
   }
 
   return (

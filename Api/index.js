@@ -31,7 +31,11 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(
       null,
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+      file.fieldname +
+        "_" +
+        Date.now() +
+        file.originalname +
+        path.extname(file.originalname)
     );
   },
 });
@@ -39,9 +43,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/upload", upload.array("images"), (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
   let fileNames = req.files.map((file) => file.filename);
-  console.log(fileNames);
-  res.send(fileNames);
+  res.json(fileNames);
 });
 
 // Routes
