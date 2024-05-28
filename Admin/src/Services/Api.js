@@ -18,10 +18,7 @@ export async function Update(url, object) {
   await axios.put(`${baseUrl}${url}`, object);
 }
 
-export async function Remove(url, id) {
-  return await axios.delete(`${baseUrl}${url}/${id}`);
+export async function Remove(url, id, object = []) {
+  const data = object;
+  return await axios.delete(`${baseUrl}${url}/${id}`, {data});
 }
-
-// export async function Multimedia(url, media, params) {
-//   return await axios.post(`${baseUrl}${url}`, media, params);
-// }

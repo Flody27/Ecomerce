@@ -18,7 +18,7 @@ export default function Products() {
     });
   }
 
-  function deleteProduct(id) {
+  function deleteProduct(id,images) {
     Swal.fire({
       title: "Estas seguro en eliminar este producto?",
       showDenyButton: true,
@@ -28,7 +28,7 @@ export default function Products() {
       denyButtonColor: "#949699",
     }).then((result) => {
       if (result.isConfirmed) {
-        Remove("/deleteProduct", id)
+        Remove("/deleteProduct", id,images)
           .then(() => {
             Swal.fire("Eliminado correctamente", "", "success").then(() => {
               window.location.reload();
@@ -161,7 +161,7 @@ export default function Products() {
                           <button
                             className="btn btn-sm btn-outline-danger col-5 mx-1"
                             onClick={() => {
-                              deleteProduct(producto._id);
+                              deleteProduct(producto._id,producto.images);
                             }}
                           >
                             Borrar

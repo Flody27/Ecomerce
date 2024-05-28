@@ -1,5 +1,8 @@
 const ProductModel = require("../models/product.model");
 const { upload } = require("../utils/ImagesHandler");
+const fs = require("fs");
+const path = require("path");
+
 exports.getProducts = async (req, res) => {
   ProductModel.find()
     .then((result) => {
@@ -115,6 +118,11 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
+  req.body.forEach((file) => {
+    let imagePath = path.join(__dirname, "../../images", file);
+    fs.unlink(imagePath, () => {});
+  });
+
   ProductModel.findByIdAndDelete(req.params.id)
     .then(() => {
       console.log("deleting the product.");
