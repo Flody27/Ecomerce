@@ -22,29 +22,26 @@ export default function Sidebar() {
             </li>
             <li className="g_heading">E-Commerce</li>
             <li className="">
-              <a href="/Productos">Productos</a>
+              <a href="/Productos">
+                <i className="ti-package"></i>
+                Productos
+              </a>
             </li>
-            <li className="">
-              <a href="/Users">Usuarios</a>
-            </li>
-            {/* <li className="g_heading">Desplegable</li>
             <li>
               <a href="#" className="has-arrow">
-                <i className="ti-pie-chart" />
-                <span>Desplegable</span>
+                <i className="ti-user" />
+                <span>Usuarios</span>
               </a>
               <ul className="options-sidebar-menu">
                 <li>
-                  <a href="">Ejemplo</a>
+                  <a href="/Clientes">Clientes</a>
                 </li>
                 <li>
-                  <a href="">Ejemplo</a>
-                </li>
-                <li>
-                  <a href="">Ejemplo</a>
+                  <a href="/Empleados">Empleados</a>
                 </li>
               </ul>
-            </li> */}
+            </li>
+    
           </ul>
         </nav>
       </div>

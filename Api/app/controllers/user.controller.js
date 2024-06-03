@@ -31,30 +31,32 @@ exports.getUserByID = async (req, res) => {
 exports.createUser = async (req, res) => {
   const {
     name,
-    lastname,
+    lastName,
     email,
-    phone_number,
+    phoneNumber,
     password,
     role,
-    country,
-    city,
     address,
-    alt_address,
     active,
+    salary,
+    position,
+    startDate,
+    userType,
   } = req.body;
 
   const Product = new UserModel({
     name,
-    lastname,
+    lastName,
     email,
-    phone_number,
+    phoneNumber,
     password,
     role,
-    country,
-    city,
     address,
-    alt_address,
     active,
+    salary,
+    position,
+    startDate,
+    userType,
   });
 
   Product.save()
@@ -73,32 +75,34 @@ exports.createUser = async (req, res) => {
 exports.editUser = async (req, res) => {
   const {
     name,
-    lastname,
+    lastName,
     email,
-    phone_number,
+    phoneNumber,
     password,
     role,
-    country,
-    city,
     address,
-    alt_address,
     active,
+    salary,
+    position,
+    startDate,
+    userType,
   } = req.body;
 
   UserModel.findByIdAndUpdate(
     req.params.id,
     {
       name,
-      lastname,
+      lastName,
       email,
-      phone_number,
+      phoneNumber,
       password,
       role,
-      country,
-      city,
       address,
-      alt_address,
       active,
+      salary,
+      position,
+      startDate,
+      userType,
     },
     { new: true }
   )

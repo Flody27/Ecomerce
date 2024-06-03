@@ -19520,3 +19520,38 @@ body *:hover::-webkit-scrollbar-thumb {
 .card-tag:hover button {
     color: var(--red);
 }
+
+.btn-add-address {
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    height: 300px;
+    width: 200px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.address-card {
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    height: 300px;
+    width: 200px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+}
+
+.btn-delete-address {
+    border: none;
+    width: fit-content;
+    position: absolute;
+    margin: 10px;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.btn-delete-address:hover {
+    background-color: #e3e3e3;
+}
