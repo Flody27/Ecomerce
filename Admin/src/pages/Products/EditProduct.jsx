@@ -1,18 +1,20 @@
 import Layout from "../../components/Layout";
-import { GetById, Get, Create } from "../../Services/Api";
+import { GetById, Get, Update } from "../../Services/Api";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { object, string, number, array } from "yup";
 
 export default function EditProduct() {
   const title = "Editar Producto";
   const [imagesUI, setImagesUI] = useState([]);
-  const [imagesOG, setImagesOG] = useState([]);
+  const [ogImages, setOgImages] = useState([]);
+  const [deleteImages, setDeleteImages] = useState([]);
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tag, setTag] = useState("");
   const baseUrl = import.meta.env.VITE_API_URL;
-
+  const productId = window.location.pathname.split("/")[2];
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -25,17 +27,41 @@ export default function EditProduct() {
     tags: [],
   });
 
+  const schemaProduct = object().shape({
+    name: string()
+      .required("El campo nombre es obligatorio")
+      .typeError("Valor incorrecto en el campo Nombre"),
+    description: string()
+      .required("El campo detalles es obligatorio")
+      .typeError("Valor incorrecto en el campo detalles"),
+    price: number()
+      .typeError("El valor del campo precio debe ser numerico")
+      .required("El campo precio es obligatorio"),
+    discount: number().typeError("El valor del campo precio debe ser numerico"),
+    brand: string()
+      .required("El campo marca es obligatorio")
+      .typeError("Valor incorrecto en el campo marca"),
+    category: string().required("El campo categoria es obligatorio"),
+    quantity: number()
+      .typeError("El valor del campo cantidad debe ser numerico")
+      .required("El campo cantidad es obligatorio"),
+    images: array().min(1, "Debe agregar al menos una imagen"),
+    tags: array(),
+  });
+
   useEffect(() => {
     GetCategories();
-    GetById("/getProduct", window.location.pathname.split("/")[2]).then(
-      (data) => {
-        setProduct(data.data);
-        setTags(data.data.tags);
-        setImagesUI(data.data.images.map((img) => `${baseUrl}/${img}`));
-        setImagesOG(data.data.images.map((img) => `${baseUrl}/${img}`));
-      }
-    );
+    GetById("/getProduct", productId).then((data) => {
+      setProduct(data.data);
+      setTags(data.data.tags);
+      setImagesUI(data.data.images.map((img) => `${baseUrl}/${img}`));
+      setOgImages(data.data.images);
+    });
   }, []);
+
+  useEffect(() => {
+    setProduct({ ...product, tags: tags });
+  }, [tags]);
 
   function GetCategories() {
     Get("/getCategories").then((categories) => {
@@ -48,9 +74,8 @@ export default function EditProduct() {
     const imagesArray = filesArray.map((file) => {
       return URL.createObjectURL(file);
     });
-    console.log(filesArray);
     setImagesUI((img) => img.concat(imagesArray));
-    setProduct({ ...product, images: filesArray });
+    setProduct({ ...product, images: product.images.concat(filesArray) });
   }
 
   function DeleteImage(index) {
@@ -59,6 +84,7 @@ export default function EditProduct() {
       ...product,
       images: product.images.filter((_, i) => i !== index),
     });
+    setDeleteImages((img) => img.concat(product.images[index]));
   }
 
   function AddTag(event) {
@@ -76,6 +102,74 @@ export default function EditProduct() {
   const HandleInputChange = (event) => {
     setProduct({ ...product, [event.target.name]: event.target.value });
   };
+
+  async function HandleSubmit() {
+    try {
+      await schemaProduct.validate(product, { abortEarly: false });
+
+      let updatedProduct = {
+        ...product,
+      };
+
+      if (JSON.stringify(ogImages) == JSON.stringify(product.images)) {
+        updatedProduct = {
+          ...product,
+          deleteImages: deleteImages,
+        };
+      }
+
+      const imagesToUpload = product.images.filter(
+        (image) => !ogImages.includes(image)
+      );
+
+      const uploadedImages = product.images.filter(
+        (img) => !imagesToUpload.includes(img)
+      );
+
+      const formData = new FormData();
+      imagesToUpload.forEach((img) => {
+        formData.append("images", img);
+      });
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const uploadedImageNames = response.data;
+      let imgsArray = uploadedImages.concat(uploadedImageNames);
+
+      updatedProduct = {
+        ...product,
+        images: imgsArray,
+        deleteImages: deleteImages,
+      };
+
+      await Update(`/editProduct/${productId}`, updatedProduct);
+
+      Swal.fire("Éxito", "Cambios guardados con exito", "success").then(() => {
+        window.location = "/Productos";
+      });
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        let message = "";
+        error.inner.forEach((err) => {
+          message += `<p>${err.message}<p/>`;
+        });
+        Swal.fire("Oops", message, "error");
+      } else if (axios.isAxiosError(error)) {
+        Swal.fire("Error subiendo imágenes", error.message, "error");
+      } else {
+        Swal.fire("Error", error.message, "error");
+      }
+      console.error("Error:", error);
+    }
+  }
 
   return (
     <Layout title={title}>
@@ -261,7 +355,7 @@ export default function EditProduct() {
                   <button
                     type="button"
                     className="btn btn-primary w-100"
-                    // onClick={() => HandleSubmit()}
+                    onClick={() => HandleSubmit()}
                   >
                     Agregar
                   </button>

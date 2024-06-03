@@ -86,7 +86,15 @@ exports.editProduct = async (req, res) => {
     tags,
     favorites,
     ratings,
+    deleteImages,
   } = req.body;
+
+  if (deleteImages.length > 0) {
+    deleteImages.forEach((file) => {
+      let imagePath = path.join(__dirname, "../../images", file);
+      fs.unlink(imagePath, () => {});
+    });
+  }
 
   ProductModel.findByIdAndUpdate(
     req.params.id,
