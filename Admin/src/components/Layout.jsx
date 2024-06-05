@@ -159,7 +159,7 @@ export default function Layout({ children, title = "TechShop" }) {
 
       <div className="main_content" id="main-content">
         {/* SIDEBAR */}
-        <Sidebar />
+        <Sidebar title={title} />
 
         {/* MAINPAGE */}
         <div className="page">{children}</div>

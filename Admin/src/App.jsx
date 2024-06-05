@@ -7,11 +7,11 @@ import ProductPreview from "./pages/Products/ProductPreview";
 import Customers from "./pages/Customers/Customers";
 import AddCustomer from "./pages/Customers/AddCustomer";
 import EditCustomer from "./pages/Customers/EditCustomer";
-// import InfoCustomer from "./pages/Customers/InfoCustomer";
+import InfoCustomer from "./pages/Customers/InfoCustomer";
 import Employees from "./pages/Employees/Employees";
 import AddEmployee from "./pages/Employees/AddEmployee";
 import EditEmployee from "./pages/Employees/EditEmployee";
-// import InfoEmployee from "./pages/Employees/InfoEmployee";
+import InfoEmployee from "./pages/Employees/InfoEmployee";
 import Login from "./pages/Auth/Login";
 
 function App() {
@@ -30,13 +30,13 @@ function App() {
           <Route element={<Customers />} path="/Clientes" />
           <Route element={<AddCustomer />} path="/AgregarCliente" />
           <Route element={<EditCustomer />} path="/EditarCliente/:id" />
-          {/* <Route element={<InfoCustomer />} path="/Cliente/:id" /> */}
+          <Route element={<InfoCustomer />} path="/Cliente/:id" />
 
           {/* Employees */}
           <Route element={<Employees />} path="/Empleados" />
           <Route element={<AddEmployee />} path="/AgregarEmpleado" />
           <Route element={<EditEmployee />} path="/EditarEmpleado/:id" />
-          {/* <Route element={<InfoEmployee />} path="/Empleado/:id" /> */}
+          <Route element={<InfoEmployee />} path="/Empleado/:id" />
 
           {/* Auth */}
           <Route element={<Login />} path="/IniciarSesion" />
