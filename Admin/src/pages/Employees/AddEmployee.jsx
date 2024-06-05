@@ -41,6 +41,7 @@ export default function AddEmployee() {
       .required("El campo fecha de incio es obligatorio")
       .typeError("Valor incorrecto en el campo fecha de inicio"),
   });
+  
   const HandleInputChange = (event) => {
     setEmployee({ ...employee, [event.target.name]: event.target.value });
   };

@@ -17,7 +17,7 @@ export default function AddCustomer() {
     userType: "customer",
   });
 
-  const schemaEmployee = object().shape({
+  const schemaCustomer = object().shape({
     name: string()
       .required("El campo nombre es obligatorio")
       .typeError("Valor incorrecto en el campo nombre"),
@@ -31,14 +31,16 @@ export default function AddCustomer() {
     phoneNumber: number()
       .required("El campo numero telefonico es obligatorio")
       .typeError("Valor incorrecto en el campo numero telefonico"),
-    address: array().min(1, "Debe agregar al menos una direccion"),
+    address: array()
+      .min(1, "Debe agregar al menos una direccion")
+      .max(3, "El maximo de direcciones a registrar es de 3"),
   });
 
   const [address, setAddress] = useState({
     country: "",
     state: "",
     city: "",
-    zipCode: 0,
+    zipCode: null,
     address: "",
   });
 
@@ -93,8 +95,26 @@ export default function AddCustomer() {
     }
   }
 
+  function validateMaxAddress() {
+    if (customer.address.length == 3) {
+      return Swal.fire(
+        "Upps",
+        "El maximo de direcciones a registrar es de 3",
+        "error"
+      ).then(() => {
+        $("#modalAddress").modal("hide");
+      });
+    }
+  }
+
   function CleanAddress() {
-    setAddress({ country: "", state: "", city: "", zipCode: 0, address: "" });
+    setAddress({
+      country: "",
+      state: "",
+      city: "",
+      zipCode: "",
+      address: "",
+    });
   }
 
   function DeleteAddres(index) {
@@ -106,13 +126,9 @@ export default function AddCustomer() {
 
   async function HandleSubmit() {
     try {
-      await schemaEmployee.validate(customer, { abortEarly: false });
+      await schemaCustomer.validate(customer, { abortEarly: false });
 
-      const updatedObject = {
-        ...customer,
-      };
-
-      await Create("/addUser", updatedObject);
+      await Create("/addUser", customer);
       Swal.fire("Éxito", "Cliente registrado exitosamente", "success").then(
         () => {
           window.location = "/Clientes";
@@ -236,6 +252,7 @@ export default function AddCustomer() {
                     className="btn-add-address"
                     data-toggle="modal"
                     data-target="#modalAddress"
+                    onClick={validateMaxAddress}
                   >
                     Agregar direccion
                   </button>
@@ -285,6 +302,7 @@ export default function AddCustomer() {
                   aria-label=""
                   name="country"
                   id="country"
+                  value={address.country}
                   required
                   onChange={HandleAddress}
                 />
@@ -298,6 +316,7 @@ export default function AddCustomer() {
                   aria-label=""
                   name="state"
                   id="state"
+                  value={address.state}
                   required
                   onChange={HandleAddress}
                 />
@@ -311,6 +330,7 @@ export default function AddCustomer() {
                   aria-label=""
                   name="city"
                   id="city"
+                  value={address.city}
                   required
                   onChange={HandleAddress}
                 />
@@ -324,6 +344,7 @@ export default function AddCustomer() {
                   aria-label=""
                   name="zipCode"
                   id="zipCode"
+                  value={address.zipCode}
                   onChange={HandleAddress}
                 />
               </div>
@@ -335,6 +356,7 @@ export default function AddCustomer() {
                   rows="2"
                   className="form-control"
                   required
+                  value={address.address}
                   onChange={HandleAddress}
                 ></textarea>
                 <small>Obligatorio</small>
