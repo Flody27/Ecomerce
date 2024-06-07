@@ -32,7 +32,7 @@ exports.getRoleByID = async (req, res) => {
 };
 
 exports.createRole = async (req, res) => {
-  const { roleName, resources } = req.body;
+  const { roleName, resources, actions } = req.body;
 
   const x = new roleModel({ roleName, resources });
 
@@ -50,10 +50,14 @@ exports.createRole = async (req, res) => {
 };
 
 exports.editRole = async (req, res) => {
-  const { roleName, resources } = req.body;
+  const { roleName, resources, actions } = req.body;
 
   roleModel
-    .findByIdAndUpdate(req.params.id, { roleName, resources }, { new: true })
+    .findByIdAndUpdate(
+      req.params.id,
+      { roleName, resources, actions },
+      { new: true }
+    )
     .then(() => {
       console.log("Updating .");
       res.send({ message: "The role was successfully updated." });

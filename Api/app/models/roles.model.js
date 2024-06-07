@@ -9,6 +9,14 @@ const rolesSchema = mongoose.Schema(
     resources: [
       { resourceId: mongoose.SchemaTypes.ObjectId, resource: String },
     ],
+    actions: [
+      {
+        action: {
+          type: String,
+          enum: ["access", "details", "edit", "create", "delete"],
+        },
+      },
+    ],
   },
   {
     timestamps: true,
