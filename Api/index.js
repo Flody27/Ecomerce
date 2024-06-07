@@ -52,3 +52,7 @@ require("./app/routes/product.routes")(app);
 require("./app/routes/commentProduct.routes")(app);
 require("./app/routes/categoryProduct.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/sales.routes")(app);
+require("./app/routes/order.routes")(app);
+require("./app/routes/refundRequest.routes")(app);
+require("./app/routes/roles.routes")(app);
