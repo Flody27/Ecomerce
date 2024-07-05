@@ -4,7 +4,7 @@ const refundSchema = mongoose.Schema(
   {
     customer: {
       customerId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
       },
       name: { type: String, required: true },

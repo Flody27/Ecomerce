@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const salesSchema = mongoose.Schema(
   {
-    orderId: { type: Schema.Types.ObjectId, required: true },
+    orderId: { type: mongoose.SchemaTypes.ObjectId, required: true },
     customer: {
       customerId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
       },
       name: { type: String, required: true },
@@ -13,7 +13,7 @@ const salesSchema = mongoose.Schema(
     products: [
       {
         productId: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.SchemaTypes.ObjectId,
           required: true,
         },
         name: { type: String, required: true },

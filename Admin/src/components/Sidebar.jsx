@@ -45,6 +45,40 @@ export default function Sidebar({ title }) {
                 </li>
               </ul>
             </li>
+            <li>
+              <a href="">
+                <i className="ti-shopping-cart"></i>Pedidos
+              </a>
+            </li>
+            <li
+              className={
+                title == "Ventas" || title == "Reembolso" ? "active" : ""
+              }
+            >
+              <a href="#" className="has-arrow">
+                <i className="ti-money"></i>
+                <span>Ventas</span>
+              </a>
+              <ul className="options-sidebar-menu">
+                <li className={title == "Ventas" ? "active" : ""}>
+                  <a href="">Ventas</a>
+                </li>
+                <li className={title == "Reembolso" ? "active" : ""}>
+                  <a href="">Reembolso</a>
+                </li>
+              </ul>
+            </li>
+            <li className="g_heading">Admin</li>
+            <li className={title == "Roles" ? "active" : ""}>
+              <a href="/Roles">
+                <i className="ti-lock"></i>Roles
+              </a>
+            </li>
+            <li className={title == "Tienda" ? "active" : ""}>
+              <a href="">
+                <i className="ti-bag"></i>Tienda
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

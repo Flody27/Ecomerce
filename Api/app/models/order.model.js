@@ -4,7 +4,7 @@ const orderSchema = mongoose.Schema(
   {
     customer: {
       customerId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
       },
       name: { type: String, required: true },
@@ -14,7 +14,7 @@ const orderSchema = mongoose.Schema(
     products: [
       {
         productId: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.SchemaTypes.ObjectId,
           required: true,
         },
         name: { type: String, required: true },

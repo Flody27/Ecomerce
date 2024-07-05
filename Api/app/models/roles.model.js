@@ -7,14 +7,14 @@ const rolesSchema = mongoose.Schema(
       required: [true, "The name of the role is required."],
     },
     resources: [
-      { resourceId: mongoose.SchemaTypes.ObjectId, resource: String },
-    ],
-    actions: [
       {
-        action: {
-          type: String,
-          enum: ["access", "details", "edit", "create", "delete"],
-        },
+        resource: { type: String, unique: true },
+        actions: [
+          {
+            type: String,
+            enum: ["access", "details", "edit", "create", "delete"],
+          },
+        ],
       },
     ],
   },

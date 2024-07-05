@@ -213,9 +213,9 @@ export default function AddCustomer() {
                 {customer.address.map((adrs, index) => {
                   return (
                     <div className="col-4" key={index}>
-                      <div className="card address-card">
+                      <div className="card generic-card">
                         <button
-                          className="btn-delete-address"
+                          className="btn-delete-generic"
                           onClick={() => DeleteAddres(index)}
                           type="button"
                         >

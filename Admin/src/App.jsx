@@ -13,6 +13,9 @@ import AddEmployee from "./pages/Employees/AddEmployee";
 import EditEmployee from "./pages/Employees/EditEmployee";
 import InfoEmployee from "./pages/Employees/InfoEmployee";
 import Login from "./pages/Auth/Login";
+import Roles from "./pages/Roles/Roles";
+import AddRole from "./pages/Roles/AddRole";
+import EditRole from "./pages/Roles/EditRole";
 
 function App() {
   return (
@@ -37,6 +40,11 @@ function App() {
           <Route element={<AddEmployee />} path="/AgregarEmpleado" />
           <Route element={<EditEmployee />} path="/EditarEmpleado/:id" />
           <Route element={<InfoEmployee />} path="/Empleado/:id" />
+
+          {/* Roles */}
+          <Route element={<Roles />} path="/Roles" />
+          <Route element={<AddRole />} path="/AgregarRol" />
+          <Route element={<EditRole />} path="/EditarRol/:id" />
 
           {/* Auth */}
           <Route element={<Login />} path="/IniciarSesion" />

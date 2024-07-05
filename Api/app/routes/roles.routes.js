@@ -13,11 +13,7 @@ module.exports = (app) => {
 
   app.get("/getResources", controller.getResources);
 
-  app.get("/getResource/:id", controller.getResourceByID);
-
   app.post("/addResource", controller.createResource);
-
-  app.put("/editResource/:id", controller.editResource);
 
   app.delete("/deleteResource/:id", controller.deleteResoruce);
 };

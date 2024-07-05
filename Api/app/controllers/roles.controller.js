@@ -101,25 +101,10 @@ exports.getResources = async (req, res) => {
     });
 };
 
-exports.getResourceByID = async (req, res) => {
-  resourcesModel
-    .findById(req.params.id)
-    .then((result) => {
-      console.log("Listing resource.");
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log("There was an error getting the resource.", err);
-      res.status(500).send({
-        message: err.message || "There was an error getting the resource.",
-      });
-    });
-};
-
 exports.createResource = async (req, res) => {
   const { resource } = req.body;
 
-  const x = new roleModel({ resource });
+  const x = new resourcesModel({ resource });
 
   x.save()
     .then(() => {
@@ -130,23 +115,6 @@ exports.createResource = async (req, res) => {
       console.log("There was an error registering the resource.", err);
       res.status(500).send({
         message: err.message || "There was an error registering the resource.",
-      });
-    });
-};
-
-exports.editResource = async (req, res) => {
-  const { resource } = req.body;
-
-  resourcesModel
-    .findByIdAndUpdate(req.params.id, { resource }, { new: true })
-    .then(() => {
-      console.log("Updating .");
-      res.send({ message: "The resource was successfully updated." });
-    })
-    .catch((err) => {
-      console.log("There was an error updating the resource.", err);
-      res.status(500).send({
-        message: err.message || "There was an error updating the resource.",
       });
     });
 };
