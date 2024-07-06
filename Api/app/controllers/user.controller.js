@@ -44,7 +44,7 @@ exports.createUser = async (req, res) => {
     userType,
   } = req.body;
 
-  const Product = new UserModel({
+  const User = new UserModel({
     name,
     lastName,
     email,
@@ -59,7 +59,7 @@ exports.createUser = async (req, res) => {
     userType,
   });
 
-  Product.save()
+  User.save()
     .then(() => {
       console.log("Registering user.");
       res.send({ message: "User successfully registered." });

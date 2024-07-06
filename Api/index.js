@@ -56,3 +56,4 @@ require("./app/routes/sales.routes")(app);
 require("./app/routes/order.routes")(app);
 require("./app/routes/refundRequest.routes")(app);
 require("./app/routes/roles.routes")(app);
+require("./app/routes/authentication.routes")(app);

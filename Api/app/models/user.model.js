@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
       required: [true, "The email is required."],
     },
     phoneNumber: Number,
-    password: { type: String },
+    password: String,
     userPic: String,
     roles: [{ roleId: mongoose.SchemaTypes.ObjectId, role: String }],
     position: String,
