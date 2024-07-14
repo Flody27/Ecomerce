@@ -24,30 +24,30 @@ function App() {
         <Routes>
           <Route element={<Home />} path="/" />
           {/* Products */}
-          <Route element={<Products />} path="/Productos" />
-          <Route element={<AddProduct />} path="/AgregarProducto" />
-          <Route element={<EditProduct />} path="/EditarProducto/:id" />
-          <Route element={<ProductPreview />} path="/Producto/:id" />
+          <Route element={<Products />} path="/Products" />
+          <Route element={<AddProduct />} path="/AddProduct" />
+          <Route element={<EditProduct />} path="/EditProduct/:id" />
+          <Route element={<ProductPreview />} path="/Product/:id" />
 
           {/* Customers */}
-          <Route element={<Customers />} path="/Clientes" />
-          <Route element={<AddCustomer />} path="/AgregarCliente" />
-          <Route element={<EditCustomer />} path="/EditarCliente/:id" />
-          <Route element={<InfoCustomer />} path="/Cliente/:id" />
+          <Route element={<Customers />} path="/Customers" />
+          <Route element={<AddCustomer />} path="/AddCustomer" />
+          <Route element={<EditCustomer />} path="/EditCustomer/:id" />
+          <Route element={<InfoCustomer />} path="/Customer/:id" />
 
           {/* Employees */}
-          <Route element={<Employees />} path="/Empleados" />
-          <Route element={<AddEmployee />} path="/AgregarEmpleado" />
-          <Route element={<EditEmployee />} path="/EditarEmpleado/:id" />
-          <Route element={<InfoEmployee />} path="/Empleado/:id" />
+          <Route element={<Employees />} path="/Employees" />
+          <Route element={<AddEmployee />} path="/AddEmployee" />
+          <Route element={<EditEmployee />} path="/EditEmployee/:id" />
+          <Route element={<InfoEmployee />} path="/Employee/:id" />
 
           {/* Roles */}
           <Route element={<Roles />} path="/Roles" />
-          <Route element={<AddRole />} path="/AgregarRol" />
-          <Route element={<EditRole />} path="/EditarRol/:id" />
+          <Route element={<AddRole />} path="/AddRole" />
+          <Route element={<EditRole />} path="/EditRole/:id" />
 
           {/* Auth */}
-          <Route element={<Login />} path="/IniciarSesion" />
+          <Route element={<Login />} path="/Login" />
         </Routes>
       </BrowserRouter>
     </>

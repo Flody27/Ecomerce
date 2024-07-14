@@ -22,9 +22,9 @@ export default function Roles() {
   }, []);
 
   const columnsResource = [
-    "Recurso",
+    "Resource",
     {
-      name: "Eliminar",
+      name: "Delete",
       options: {
         filter: false,
         print: false,
@@ -34,10 +34,10 @@ export default function Roles() {
   ];
 
   const columnsRol = [
-    "Rol",
-    "Detalles",
+    "Role",
+    "Details",
     {
-      name: "Opciones",
+      name: "Options",
       options: {
         filter: false,
         print: false,
@@ -48,20 +48,20 @@ export default function Roles() {
 
   function deleteResource(id) {
     Swal.fire({
-      title: "Esta seguro de esta acción?",
-      text: "Se va a perder esta información para siempre",
+      title: "Are you sure about this action?",
+      text: "This information wil be deleted",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         Remove("/deleteResource", id).then(() => {
           Swal.fire({
-            title: "Eliminado",
-            text: "Se eliminó con éxito",
+            title: "Deleted",
+            text: "Deleted sucessfully",
             icon: "success",
             timer: 1500,
           }).then(() => window.location.reload());
@@ -88,20 +88,20 @@ export default function Roles() {
 
   function deleteRole(id) {
     Swal.fire({
-      title: "Esta seguro de esta acción?",
-      text: "Se va a perder esta información para siempre",
+      title: "Are you sure about this action?",
+      text: "This information wil be deleted",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         Remove("/deleteRole", id).then(() => {
           Swal.fire({
-            title: "Eliminado",
-            text: "Se eliminó con éxito",
+            title: "Deleted",
+            text: "Deleted sucessfully",
             icon: "success",
             timer: 1500,
           }).then(() => window.location.reload());
@@ -122,7 +122,7 @@ export default function Roles() {
         >
           <i className="fa fa-trash-o"></i>
         </button>
-        <a href={`/EditarRol/${id}`} className="btn btn-primary btn-sm mx-1">
+        <a href={`/EditRole/${id}`} className="btn btn-primary btn-sm mx-1">
           <i className="fa fa-edit"></i>
         </a>
       </>
@@ -131,15 +131,13 @@ export default function Roles() {
 
   function AddResource() {
     if (resource.resource == "") {
-      return Swal.fire("Upss", "El campo recurso es obligatorio", "error");
+      return Swal.fire("Upss", "The resource field is required", "error");
     }
 
     Create("/addResource", resource).then(() => {
-      Swal.fire("Guardado", "Recurso registrado exitosamente", "success").then(
-        () => {
-          window.location.reload();
-        }
-      );
+      Swal.fire("Saved", "Recsource saved successfully", "success").then(() => {
+        window.location.reload();
+      });
     });
   }
 
@@ -147,13 +145,14 @@ export default function Roles() {
     $("#modalRole").modal("show");
     setResourcesDetail(role);
   }
+
   return (
     <Layout title={title}>
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
-          <a href="/AgregarRol" className="btn btn-primary mx-1" type="button">
-            Agregar Rol
+          <a href="/AddRole" className="btn btn-primary mx-1" type="button">
+            Add Role
           </a>
           <button
             className="btn btn-primary mx-1"
@@ -161,7 +160,7 @@ export default function Roles() {
             data-toggle="modal"
             data-target="#modalResource"
           >
-            Agregar recurso
+            Add resource
           </button>
         </div>
       </nav>
@@ -181,7 +180,7 @@ export default function Roles() {
                     }}
                     className="btn btn-info"
                   >
-                    Ver detalles
+                    See details
                   </button>,
                   OptionsRoles(role._id),
                 ])}
@@ -197,7 +196,7 @@ export default function Roles() {
           <div className="col-lg-12 col-md-12">
             <div className="table-responsive">
               <Table
-                title={"Recursos"}
+                title={"Resources"}
                 data={resources.map((res) => [
                   res.resource,
                   OptionsResource(res._id),
@@ -218,7 +217,7 @@ export default function Roles() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Direccion</h5>
+              <h5 className="modal-title">Add Resource</h5>
               <button
                 type="button"
                 className="close"
@@ -233,7 +232,7 @@ export default function Roles() {
             </div>
             <div className="modal-body row">
               <div className="form-group mb-3 col-12">
-                <b>Recurso</b>
+                <b>Resource</b>
                 <input
                   type="text"
                   className="form-control"
@@ -246,11 +245,11 @@ export default function Roles() {
                     setResource({ ...resource, resource: e.target.value });
                   }}
                 />
-                <small>Obligatorio</small>
+                <small>Required</small>
                 <p className="p-1">
-                  <i className="ti-info"></i>
-                  Un recurso se refiere a un modulo o paginas al que un usuario
-                  tiene acceso, ej: Productos, Clientes, etc.
+                  <i className="ti-info"></i>A resource refers to a module or
+                  pages that a user has access to, such as: Products, Customers,
+                  etc.
                 </p>
               </div>
             </div>
@@ -263,14 +262,14 @@ export default function Roles() {
                   resource.resource = "";
                 }}
               >
-                Cancelar
+                Cancel
               </button>
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={AddResource}
               >
-                Guardar
+                Add
               </button>
             </div>
           </div>
@@ -287,7 +286,7 @@ export default function Roles() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Detalles</h5>
+              <h5 className="modal-title">Details</h5>
               <button
                 type="button"
                 className="close"

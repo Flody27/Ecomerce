@@ -11,7 +11,7 @@ export default function EditRole() {
     resources: [],
   });
   const [resource, setResource] = useState({
-    resource: "Selecione un recurso",
+    resource: "Select a resource",
     actions: [],
   });
 
@@ -50,19 +50,19 @@ export default function EditRole() {
   const GrantResource = () => {
     if (
       resource.actions == 0 ||
-      resource.resource.trim() == "Selecione un recurso"
+      resource.resource.trim() == "Select a resource"
     ) {
       CleanResourceForm();
       return Swal.fire(
         "error",
-        "Los campos acciones y recursos no pueden estar vacios",
+        "You must have to select a resource and at least one action",
         "error"
       );
     }
 
     if (role.resources.find((role) => role.resource == resource.resource)) {
       CleanResourceForm();
-      return Swal.fire("error", "No se puede repetir recurso", "error");
+      return Swal.fire("error", "Resources cannot be repeated", "error");
     }
 
     setRole({ ...role, resources: role.resources.concat(resource) });
@@ -70,7 +70,7 @@ export default function EditRole() {
   };
 
   function CleanResourceForm() {
-    setResource({ resource: "Selecione un recurso", actions: [] });
+    setResource({ resource: "Select a resource", actions: [] });
     actions.forEach((action) => {
       document.getElementById(action).checked = false;
     });
@@ -87,20 +87,14 @@ export default function EditRole() {
     e.preventDefault();
 
     if (role.roleName.trim == "" || role.resources.length == 0) {
-      return Swal.fire(
-        "error",
-        "Nombre de rol o recursos no asignados",
-        "error"
-      );
+      return Swal.fire("error", "Role name or resources not assigned", "error");
     }
 
     Update(`/editRole/${roleId}`, role)
       .then(() => {
-        Swal.fire("Éxito", "Rol actualizado exitosamente", "success").then(
-          () => {
-            window.location = "/Roles";
-          }
-        );
+        Swal.fire("Éxito", "Changes successfully saved", "success").then(() => {
+          window.location = "/Roles";
+        });
       })
       .catch((error) => {
         Swal.fire("Error", error, "error");
@@ -122,7 +116,7 @@ export default function EditRole() {
             >
               <div className="body row">
                 <div className="form-group mb-3 col-12">
-                  <b>Rol</b>
+                  <b>Role</b>
                   <input
                     type="text"
                     className="form-control"
@@ -133,14 +127,14 @@ export default function EditRole() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="mb-3 col-12">
                   <hr />
-                  <b>Asignar acceso a un recurso</b>
+                  <b>Assign access to a resource</b>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <p>Lista de recursos</p>
+                  <p>List of resources</p>
                   <select
                     className="custom-select"
                     id="resource"
@@ -151,8 +145,8 @@ export default function EditRole() {
                       setResource({ ...resource, resource: e.target.value });
                     }}
                   >
-                    <option value="Selecione un recurso" disabled>
-                      Selecione un recurso
+                    <option value="Select a resource" disabled>
+                      Select a resource
                     </option>
                     {resourcesList.map((res) => (
                       <option key={res._id} value={res.resource}>
@@ -160,7 +154,7 @@ export default function EditRole() {
                       </option>
                     ))}
                   </select>
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-12">
                   {actions.map((action, index) => {
@@ -190,13 +184,13 @@ export default function EditRole() {
                     type="button"
                     className="btn btn-secondary"
                   >
-                    Asignar recurso
+                    Assign resource
                   </button>
                   <hr />
                 </div>
                 {role.resources == 0 ? (
                   <div className="col-12 mb-3 text-center">
-                    <b>Sin recurso asignados</b>
+                    <b>No resources assigned</b>
                   </div>
                 ) : (
                   role.resources.map((resource, index) => (
@@ -226,7 +220,7 @@ export default function EditRole() {
                 </div>
                 <div className="col-12">
                   <button className="btn btn-primary w-100 my-2">
-                    Actulizar Rol
+                    Update role
                   </button>
                 </div>
               </div>

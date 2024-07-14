@@ -19,21 +19,21 @@ export default function EditCustomer() {
 
   const schemaCustomer = object().shape({
     name: string()
-      .required("El campo nombre es obligatorio")
-      .typeError("Valor incorrecto en el campo nombre"),
+      .required("The name field is required.")
+      .typeError("Incorrect value in the name field."),
     lastName: string()
-      .required("El campo apellido es obligatorio")
-      .typeError("Valor incorrecto en el campo apellido"),
+      .required("The last name field is required.")
+      .typeError("Incorrect value in the last name field."),
     email: string()
       .email()
-      .required("El campo correo es obligatorio")
-      .typeError("Valor incorrecto en el campo correo"),
+      .required("The email field is required.")
+      .typeError("Incorrect value in the email field."),
     phoneNumber: number()
-      .required("El campo numero telefonico es obligatorio")
-      .typeError("Valor incorrecto en el campo numero telefonico"),
+      .required("The phone nueber field is required.")
+      .typeError("Incorrect value in the phone number field."),
     address: array()
-      .min(1, "Debe agregar al menos una direccion")
-      .max(3, "El maximo de direcciones a registrar es de 3"),
+      .min(1, "You must add at least one address.")
+      .max(3, "The maximum number of addresses to register is 3."),
   });
 
   const [address, setAddress] = useState({
@@ -46,18 +46,18 @@ export default function EditCustomer() {
 
   const schemaAddress = object().shape({
     country: string()
-      .required("El campo pais es obligatorio")
-      .typeError("Valor incorrecto en el campo pais"),
+      .required("The country field is required.")
+      .typeError("Incorrect value in the country field."),
     state: string()
-      .required("El campo estado es obligatorio")
-      .typeError("Valor incorrecto en el campo estado"),
+      .required("The state field is required.")
+      .typeError("Incorrect value in the state field."),
     city: string()
-      .required("El campo ciudad es obligatorio")
-      .typeError("Valor incorrecto en el campo ciudad"),
-    zipCode: number().typeError("Valor incorrecto en el campo codigo postal"),
+      .required("The city field is required.")
+      .typeError("Incorrect value in the city field."),
+    zipCode: number().typeError("Incorrect value in the zip code field."),
     address: string()
-      .required("El campo direccion es obligatorio")
-      .typeError("Valor incorrecto en el campo direccion"),
+      .required("The address field is required.")
+      .typeError("Incorrect value in the address field."),
   });
 
   useEffect(() => {
@@ -80,14 +80,12 @@ export default function EditCustomer() {
 
       setCustomer({ ...customer, address: customer.address.concat(address) });
 
-      return Swal.fire(
-        "Éxito",
-        "Direccion registrada exitosamente",
-        "success"
-      ).then(() => {
-        CleanAddress();
-        $("#modalAddress").modal("hide");
-      });
+      return Swal.fire("Success", "Address added successfully", "success").then(
+        () => {
+          CleanAddress();
+          $("#modalAddress").modal("hide");
+        }
+      );
     } catch (error) {
       if (error.name === "ValidationError") {
         let message = "";
@@ -115,7 +113,7 @@ export default function EditCustomer() {
     if (customer.address.length == 3) {
       return Swal.fire(
         "Upps",
-        "El maximo de direcciones a registrar es de 3",
+        "The maximum number of addresses to register is 3.",
         "error"
       ).then(() => {
         $("#modalAddress").modal("hide");
@@ -135,8 +133,8 @@ export default function EditCustomer() {
       await schemaCustomer.validate(customer, { abortEarly: false });
 
       await Update(`/editUser/${customerId}`, customer);
-      Swal.fire("Éxito", "Cliente editado exitosamente", "success").then(() => {
-        window.location = "/Clientes";
+      Swal.fire("Success", "Changes successfully saved", "success").then(() => {
+        window.location = "/Customers";
       });
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -159,7 +157,7 @@ export default function EditCustomer() {
             <form className="card" noValidate autoSave="false" id="formData">
               <div className="body row">
                 <div className="form-group mb-3 col-6">
-                  <b>Nombre</b>
+                  <b>Name</b>
                   <input
                     type="text"
                     className="form-control"
@@ -170,10 +168,10 @@ export default function EditCustomer() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Apellidos</b>
+                  <b>Last name</b>
                   <input
                     type="text"
                     className="form-control"
@@ -184,10 +182,10 @@ export default function EditCustomer() {
                     value={customer.lastName}
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Correo</b>
+                  <b>Email</b>
                   <input
                     type="email"
                     className="form-control"
@@ -198,10 +196,10 @@ export default function EditCustomer() {
                     value={customer.email}
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Numero telefonico</b>
+                  <b>Phone number</b>
                   <input
                     type="number"
                     className="form-control"
@@ -212,11 +210,11 @@ export default function EditCustomer() {
                     value={customer.phoneNumber}
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="col-12 mb-2">
                   <hr />
-                  <b>Direccion</b>
+                  <b>Address</b>
                 </div>
 
                 {customer.address.map((adrs, index) => {
@@ -231,23 +229,23 @@ export default function EditCustomer() {
                           <i className="ti-close"></i>
                         </button>
                         <p>
-                          <b>Pais: </b>
+                          <b>Country: </b>
                           {adrs.country}
                         </p>
                         <p>
-                          <b>Estado: </b>
+                          <b>State: </b>
                           {adrs.state}
                         </p>
                         <p>
-                          <b>Ciudad: </b>
+                          <b>City: </b>
                           {adrs.city}
                         </p>
                         <p>
-                          <b>Codigo Postal: </b>
+                          <b>Zip code: </b>
                           {adrs.zipCode}
                         </p>
                         <p>
-                          <b>Direccion: </b>
+                          <b>Address: </b>
                           {adrs.address}
                         </p>
                       </div>
@@ -263,7 +261,7 @@ export default function EditCustomer() {
                     data-target="#modalAddress"
                     onClick={validateMaxAddress}
                   >
-                    Agregar direccion
+                    Add Address
                   </button>
                 </div>
 
@@ -273,7 +271,7 @@ export default function EditCustomer() {
                     className="btn btn-primary w-100"
                     onClick={() => HandleSubmit()}
                   >
-                    Agregar
+                    Save Changes
                   </button>
                 </div>
               </div>
@@ -292,7 +290,7 @@ export default function EditCustomer() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Direccion</h5>
+              <h5 className="modal-title">Address</h5>
               <button
                 type="button"
                 className="close"
@@ -304,7 +302,7 @@ export default function EditCustomer() {
             </div>
             <div className="modal-body row">
               <div className="form-group mb-3 col-6">
-                <b>Pais</b>
+                <b>Country</b>
                 <input
                   type="text"
                   className="form-control"
@@ -315,10 +313,10 @@ export default function EditCustomer() {
                   value={address.country}
                   onChange={HandleAddress}
                 />
-                <small>Obligatorio</small>
+                <small>Required</small>
               </div>
               <div className="form-group mb-3 col-6">
-                <b>Estado/Provincia/Region</b>
+                <b>State/Province/Region</b>
                 <input
                   type="text"
                   className="form-control"
@@ -329,10 +327,10 @@ export default function EditCustomer() {
                   value={address.state}
                   onChange={HandleAddress}
                 />
-                <small>Obligatorio</small>
+                <small>Required</small>
               </div>
               <div className="form-group mb-3 col-6">
-                <b>Ciudad</b>
+                <b>City</b>
                 <input
                   type="text"
                   className="form-control"
@@ -343,10 +341,10 @@ export default function EditCustomer() {
                   required
                   onChange={HandleAddress}
                 />
-                <small>Obligatorio</small>
+                <small>Required</small>
               </div>
               <div className="form-group mb-3 col-6">
-                <b>Codigo postal</b>
+                <b>Zip Code</b>
                 <input
                   type="number"
                   className="form-control"
@@ -358,7 +356,7 @@ export default function EditCustomer() {
                 />
               </div>
               <div className="form-group mb-3 col-12">
-                <b>Direccion</b>
+                <b>Address</b>
                 <textarea
                   name="address"
                   id="address"
@@ -368,7 +366,7 @@ export default function EditCustomer() {
                   value={address.address}
                   onChange={HandleAddress}
                 ></textarea>
-                <small>Obligatorio</small>
+                <small>Required</small>
               </div>
             </div>
             <div className="modal-footer">
@@ -378,14 +376,14 @@ export default function EditCustomer() {
                 data-dismiss="modal"
                 onClick={CleanAddress}
               >
-                Cancelar
+                Cancel
               </button>
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={AddAddres}
               >
-                Guardar
+                Add
               </button>
             </div>
           </div>

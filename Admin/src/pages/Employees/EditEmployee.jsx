@@ -5,7 +5,7 @@ import { object, string, number, date } from "yup";
 import Swal from "sweetalert2";
 
 export default function EditEmployee() {
-  const title = "Editar Empleado";
+  const title = "Edit Employee";
   const employeeId = window.location.pathname.split("/")[2];
   const [employee, setEmployee] = useState({
     name: "",
@@ -26,27 +26,27 @@ export default function EditEmployee() {
 
   const schemaEmployee = object().shape({
     name: string()
-      .required("El campo nombre es obligatorio")
-      .typeError("Valor incorrecto en el campo nombre"),
+      .required("The name field is required.")
+      .typeError("Incorrect value in the name field."),
     lastName: string()
-      .required("El campo apellido es obligatorio")
-      .typeError("Valor incorrecto en el campo apellido"),
+      .required("The last name field is required.")
+      .typeError("Incorrect value in the last name field."),
     email: string()
       .email()
-      .required("El campo correo es obligatorio")
-      .typeError("Valor incorrecto en el campo correo"),
+      .required("The email field is required.")
+      .typeError("Incorrect value in the email field."),
     phoneNumber: number()
-      .required("El campo numero telefonico es obligatorio")
-      .typeError("Valor incorrecto en el campo numero telefonico"),
+      .required("The phone number field is required.")
+      .typeError("Incorrect value in the phone number field."),
     position: string()
-      .required("El campo puesto es obligatorio")
-      .typeError("Valor incorrecto en el campo puesto"),
+      .required("The job field is required.")
+      .typeError("Incorrect value in the job field."),
     salary: number()
-      .required("El campo salario es obligatorio")
-      .typeError("Valor incorrecto en el campo salario"),
+      .required("The salary field is required.")
+      .typeError("Incorrect value in the salary field."),
     startDate: date()
-      .required("El campo fecha de incio es obligatorio")
-      .typeError("Valor incorrecto en el campo fecha de inicio"),
+      .required("The hire date field is required.")
+      .typeError("Incorrect value in the hire date field."),
   });
 
   const HandleInputChange = (event) => {
@@ -63,11 +63,9 @@ export default function EditEmployee() {
       };
 
       await Update(`/EditUser/${employeeId}`, updatedObject);
-      Swal.fire("Éxito", "Empleado editado exitosamente", "success").then(
-        () => {
-          window.location = "/Empleados";
-        }
-      );
+      Swal.fire("Succes", "Changes successfully saved", "success").then(() => {
+        window.location = "/Employees";
+      });
     } catch (error) {
       if (error.name === "ValidationError") {
         let message = "";
@@ -89,7 +87,7 @@ export default function EditEmployee() {
             <form className="card" noValidate autoSave="false" id="formData">
               <div className="body row">
                 <div className="form-group mb-3 col-6">
-                  <b>Nombre</b>
+                  <b>Name</b>
                   <input
                     type="text"
                     className="form-control"
@@ -100,10 +98,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Apellidos</b>
+                  <b>Last name</b>
                   <input
                     type="text"
                     className="form-control"
@@ -114,10 +112,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Correo</b>
+                  <b>Email</b>
                   <input
                     type="email"
                     className="form-control"
@@ -128,10 +126,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Numero telefonico</b>
+                  <b>Phone number</b>
                   <input
                     type="number"
                     className="form-control"
@@ -142,10 +140,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Puesto</b>
+                  <b>Job</b>
                   <input
                     type="text"
                     className="form-control"
@@ -156,10 +154,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Salario</b>
+                  <b>Salary</b>
                   <input
                     type="text"
                     className="form-control"
@@ -170,10 +168,10 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>Fecha de incio</b>
+                  <b>Hire date</b>
                   <input
                     type="date"
                     className="form-control"
@@ -184,10 +182,7 @@ export default function EditEmployee() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>
-                    Obligatorio (fecha en la que inicio o va a iniciar a
-                    trabajar el empleado)
-                  </small>
+                  <small>Required</small>
                 </div>
                 <div className="col-12">
                   <button
@@ -195,7 +190,7 @@ export default function EditEmployee() {
                     className="btn btn-primary w-100"
                     onClick={() => HandleSubmit()}
                   >
-                    Agregar
+                    Save Changes
                   </button>
                 </div>
               </div>

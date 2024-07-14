@@ -13,18 +13,18 @@ export default function Sidebar({ title }) {
             </div>
           </div>
           <ul id="main-menu" className="metismenu">
-            <li className="g_heading">General</li>
+            <li className="g_heading">Main menu</li>
             <li className={title === "TechShop" ? "active" : ""}>
               <a href="/">
                 <i className="ti-home" />
-                <span>Panel de control</span>
+                <span>Home</span>
               </a>
             </li>
             <li className="g_heading">E-Commerce</li>
             <li className={title === "Productos" ? "active" : ""}>
-              <a href="/Productos">
+              <a href="/Products">
                 <i className="ti-package"></i>
-                Productos
+                Products
               </a>
             </li>
             <li
@@ -34,37 +34,37 @@ export default function Sidebar({ title }) {
             >
               <a href="#" className="has-arrow">
                 <i className="ti-user" />
-                <span>Usuarios</span>
+                <span>Users</span>
               </a>
               <ul className="options-sidebar-menu">
                 <li className={title == "Clientes" ? "active" : ""}>
-                  <a href="/Clientes">Clientes</a>
+                  <a href="/Customers">Customers</a>
                 </li>
                 <li className={title == "Empleados" ? "active" : ""}>
-                  <a href="/Empleados">Empleados</a>
+                  <a href="/Employees">Employees</a>
                 </li>
               </ul>
             </li>
             <li>
               <a href="">
-                <i className="ti-shopping-cart"></i>Pedidos
+                <i className="ti-shopping-cart"></i>Orders
               </a>
             </li>
             <li
               className={
                 title == "Ventas" || title == "Reembolso" ? "active" : ""
-              }
+              } 
             >
               <a href="#" className="has-arrow">
                 <i className="ti-money"></i>
-                <span>Ventas</span>
+                <span>Sales</span>
               </a>
               <ul className="options-sidebar-menu">
                 <li className={title == "Ventas" ? "active" : ""}>
-                  <a href="">Ventas</a>
+                  <a href="">Sales</a>
                 </li>
                 <li className={title == "Reembolso" ? "active" : ""}>
-                  <a href="">Reembolso</a>
+                  <a href="">Refunds</a>
                 </li>
               </ul>
             </li>

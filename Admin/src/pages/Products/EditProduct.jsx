@@ -29,23 +29,23 @@ export default function EditProduct() {
 
   const schemaProduct = object().shape({
     name: string()
-      .required("El campo nombre es obligatorio")
-      .typeError("Valor incorrecto en el campo Nombre"),
+      .required("The  field is required")
+      .typeError("Incorrect value in the name field"),
     description: string()
-      .required("El campo detalles es obligatorio")
-      .typeError("Valor incorrecto en el campo detalles"),
+      .required("The description field is required")
+      .typeError("Incorrect value in the description field"),
     price: number()
-      .typeError("El valor del campo precio debe ser numerico")
-      .required("El campo precio es obligatorio"),
-    discount: number().typeError("El valor del campo precio debe ser numerico"),
+      .typeError("The price must a numeric value")
+      .required("The price field is required"),
+    discount: number().typeError("The discount must be a numeric value"),
     brand: string()
-      .required("El campo marca es obligatorio")
-      .typeError("Valor incorrecto en el campo marca"),
-    category: string().required("El campo categoria es obligatorio"),
+      .required("The brand field is required")
+      .typeError("Incorrect value in the brand field"),
+    category: string().required("The category field is required"),
     quantity: number()
-      .typeError("El valor del campo cantidad debe ser numerico")
-      .required("El campo cantidad es obligatorio"),
-    images: array().min(1, "Debe agregar al menos una imagen"),
+      .typeError("The quantity must a numeric value")
+      .required("The quantity field is required"),
+    images: array().min(1, "You must add at least one image"),
     tags: array(),
   });
 
@@ -152,8 +152,8 @@ export default function EditProduct() {
 
       await Update(`/editProduct/${productId}`, updatedProduct);
 
-      Swal.fire("Éxito", "Cambios guardados con exito", "success").then(() => {
-        window.location = "/Productos";
+      Swal.fire("Succes", "Changes successfully saved", "success").then(() => {
+        window.location = "/Products";
       });
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -163,7 +163,11 @@ export default function EditProduct() {
         });
         Swal.fire("Oops", message, "error");
       } else if (axios.isAxiosError(error)) {
-        Swal.fire("Error subiendo imágenes", error.message, "error");
+        Swal.fire(
+          "There was an error uploading the image(s)",
+          error.message,
+          "error"
+        );
       } else {
         Swal.fire("Error", error.message, "error");
       }
@@ -179,7 +183,7 @@ export default function EditProduct() {
             <form className="card" noValidate autoSave="false" id="formData">
               <div className="body row">
                 <div className="form-group mb-3 col-12">
-                  <b>Nombre</b>
+                  <b>Name</b>
                   <input
                     type="text"
                     className="form-control"
@@ -190,10 +194,10 @@ export default function EditProduct() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>Detalles</b>
+                  <b>Description</b>
                   <textarea
                     name="description"
                     id="description"
@@ -204,10 +208,10 @@ export default function EditProduct() {
                     required
                     onChange={HandleInputChange}
                   ></textarea>
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-4">
-                  <b>Precio</b>
+                  <b>Price</b>
                   <input
                     type="number"
                     className="form-control"
@@ -218,10 +222,10 @@ export default function EditProduct() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-4">
-                  <b>Descuento</b>
+                  <b>Discount</b>
                   <input
                     type="number"
                     className="form-control"
@@ -231,10 +235,10 @@ export default function EditProduct() {
                     value={product.discount}
                     onChange={HandleInputChange}
                   />
-                  <small>Porcentaje de descuento</small>
+                  <small>Discount percentage</small>
                 </div>
                 <div className="form-group mb-3 col-4">
-                  <b>Cantidad</b>
+                  <b>Quantity</b>
                   <input
                     type="number"
                     className="form-control"
@@ -246,7 +250,7 @@ export default function EditProduct() {
                   />
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Marca</b>
+                  <b>Brand</b>
                   <input
                     type="text"
                     className="form-control"
@@ -257,10 +261,10 @@ export default function EditProduct() {
                     required
                     onChange={HandleInputChange}
                   />
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-6">
-                  <b>Categoria</b>
+                  <b>Category</b>
                   <select
                     className="custom-select"
                     id="category"
@@ -269,8 +273,8 @@ export default function EditProduct() {
                     defaultValue={product.category}
                     onChange={HandleInputChange}
                   >
-                    <option value="Selecione una categoría" disabled>
-                      Selecione una categoría
+                    <option value="Select a category" disabled>
+                      Select a category
                     </option>
                     {categories.map((category) => (
                       <option key={category._id} value={category.category}>
@@ -278,12 +282,10 @@ export default function EditProduct() {
                       </option>
                     ))}
                   </select>
-                  <small>Obligatorio</small>
+                  <small>Required</small>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>
-                    Etiquetas <small>(Tags)</small>
-                  </b>
+                  <b>Tags</b>
                   <input
                     type="text"
                     className="form-control"
@@ -297,7 +299,7 @@ export default function EditProduct() {
                     onKeyDown={AddTag}
                   />
                   <small style={{ display: "block" }}>
-                    Presionar enter para agregar tag
+                    Press enter to add a tag
                   </small>
 
                   {tags.map((tag, key) => {
@@ -312,7 +314,7 @@ export default function EditProduct() {
                   })}
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>Imagenes</b>
+                  <b>Images</b>
                   <div className="row">
                     {imagesUI.map((img, index) => {
                       return (
@@ -357,7 +359,7 @@ export default function EditProduct() {
                     className="btn btn-primary w-100"
                     onClick={() => HandleSubmit()}
                   >
-                    Agregar
+                    Save changes
                   </button>
                 </div>
               </div>

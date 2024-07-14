@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 export default function Customers() {
-  const title = "Clientes";
+  const title = "Customers";
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
@@ -15,12 +15,12 @@ export default function Customers() {
   }, []);
 
   const columns = [
-    "Nombre",
-    "Apellidos",
-    "Teléfono",
-    "Correo Eletrónico",
+    "Name",
+    "Lastname",
+    "Phone number",
+    "Email",
     {
-      name: "Acciones",
+      name: "Options  ",
       options: {
         filter: false,
         print: false,
@@ -31,23 +31,23 @@ export default function Customers() {
 
   function deleteCustomer(id) {
     Swal.fire({
-      title: "Esta seguro de esta acción?",
-      text: "Se va a perder esta información para siempre",
+      title: "Are you sure about this action?",
+      text: "This information will be deleted",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         Remove("/deleteUser", id).then(() => {
           Swal.fire({
-            title: "Eliminado",
-            text: "Se eliminó con éxito",
+            title: "Deleted",
+            text: "Deleted sucessfully",
             icon: "success",
             timer: 1500,
-          }).then(() => window.location.replace("/Clientes"));
+          }).then(() => window.location.reload());
         });
       }
     });
@@ -57,7 +57,7 @@ export default function Customers() {
     return (
       <>
         <a
-          href={`/EditarCliente/${id}`}
+          href={`/EditCustomer/${id}`}
           className="btn btn-primary btn-sm mx-1"
         >
           <i className="fa fa-edit"></i>
@@ -71,7 +71,7 @@ export default function Customers() {
         >
           <i className="fa fa-trash-o"></i>
         </button>
-        <a href={`/Cliente/${id}`} className="btn btn-success btn-sm mx-1">
+        <a href={`/Customer/${id}`} className="btn btn-success btn-sm mx-1">
           <i className="fa fa-eye"></i>
         </a>
       </>
@@ -84,11 +84,11 @@ export default function Customers() {
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
           <a
-            href="/AgregarCliente"
+            href="/AddCustomer"
             className="btn btn-primary mx-1"
             type="button"
           >
-            Agregar
+            Add
           </a>
         </div>
       </nav>
@@ -97,7 +97,7 @@ export default function Customers() {
           <div className="col-lg-12 col-md-12">
             <div className="table-responsive">
               <Table
-                title={"Clientes"}
+                title={title}
                 data={customers.map((customer) => [
                   customer.name,
                   customer.lastName,

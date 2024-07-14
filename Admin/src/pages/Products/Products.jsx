@@ -4,7 +4,7 @@ import { Get, Remove } from "../../Services/Api";
 import Swal from "sweetalert2";
 
 export default function Products() {
-  const title = "Productos";
+  const title = "Products";
   const [productos, setProducts] = useState([]);
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -20,17 +20,17 @@ export default function Products() {
 
   function deleteProduct(id, images) {
     Swal.fire({
-      title: "Estas seguro en eliminar este producto?",
+      title: "Are you sure to delete this product?",
       showDenyButton: true,
-      confirmButtonText: "Eliminar",
-      denyButtonText: "Cancelar",
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel",
       confirmButtonColor: "#f75554",
       denyButtonColor: "#949699",
     }).then((result) => {
       if (result.isConfirmed) {
         Remove("/deleteProduct", id, images)
           .then(() => {
-            Swal.fire("Eliminado correctamente", "", "success").then(() => {
+            Swal.fire("Correctly deleted", "", "success").then(() => {
               window.location.reload();
             });
           })
@@ -51,14 +51,14 @@ export default function Products() {
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
           <button className="btn btn-secondary mx-1" type="button">
-            Exportar
+            Export
           </button>
           <a
-            href="/AgregarProducto"
+            href="/AddProduct"
             className="btn btn-primary mx-1"
             type="button"
           >
-            Agregar
+            Add
           </a>
         </div>
       </nav>
@@ -73,8 +73,8 @@ export default function Products() {
                   <input
                     className="form-control w-75"
                     type="search"
-                    placeholder="Buscar"
-                    aria-label="Buscar"
+                    placeholder="Search"
+                    aria-label="Search"
                   />
                 </div>
 
@@ -86,7 +86,7 @@ export default function Products() {
                       data-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      Categoria
+                      Category
                     </button>
                     <div className="dropdown-menu">
                       <a className="dropdown-item" href="#">
@@ -108,7 +108,7 @@ export default function Products() {
                       data-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      Filtrar
+                      Filter
                     </button>
                     <div className="dropdown-menu dropdown-menu-right">
                       <a className="dropdown-item" href="#">
@@ -148,15 +148,15 @@ export default function Products() {
                           className="product-link"
                         >
                           <h5>{producto.name}</h5>
-                          <p>Precio: ${producto.price}</p>
-                          <p>Disponibles: {producto.quantity}</p>
+                          <p>Price: ${producto.price}</p>
+                          <p>Quantity: {producto.quantity}</p>
                         </a>
                         <div className="row d-flex justify-content-center">
                           <a
-                            href={`/EditarProducto/${producto._id}`}
+                            href={`/EditProduct/${producto._id}`}
                             className="btn btn-sm btn-outline-dark col-5 mx-1"
                           >
-                            Editar
+                            Edit
                           </a>
                           <button
                             className="btn btn-sm btn-outline-danger col-5 mx-1"
@@ -164,7 +164,7 @@ export default function Products() {
                               deleteProduct(producto._id, producto.images);
                             }}
                           >
-                            Borrar
+                            Delete
                           </button>
                         </div>
                       </div>
