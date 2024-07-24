@@ -1,4 +1,5 @@
 import Layout from "../../components/Layout";
+import { MODULES } from "../../Enums/ModuleEnums";
 import Table from "../../components/Table";
 import { Get, Remove } from "../../Services/Api";
 import { useEffect, useState } from "react";
@@ -56,10 +57,7 @@ export default function Customers() {
   const Options = (id) => {
     return (
       <>
-        <a
-          href={`/EditCustomer/${id}`}
-          className="btn btn-primary btn-sm mx-1"
-        >
+        <a href={`/EditCustomer/${id}`} className="btn btn-primary btn-sm mx-1">
           <i className="fa fa-edit"></i>
         </a>
         <button
@@ -79,15 +77,11 @@ export default function Customers() {
   };
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.CUSTOMERS}>
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
-          <a
-            href="/AddCustomer"
-            className="btn btn-primary mx-1"
-            type="button"
-          >
+          <a href="/AddCustomer" className="btn btn-primary mx-1" type="button">
             Add
           </a>
         </div>

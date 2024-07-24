@@ -1,4 +1,5 @@
 import Layout from "../../components/Layout";
+import { MODULES } from "../../Enums/ModuleEnums";
 import Table from "../../components/Table";
 import { Get, Remove } from "../../Services/Api";
 import { useEffect, useState } from "react";
@@ -56,10 +57,7 @@ export default function Employees() {
   const Options = (id) => {
     return (
       <>
-        <a
-          href={`/EditEmployee/${id}`}
-          className="btn btn-primary btn-sm mx-1"
-        >
+        <a href={`/EditEmployee/${id}`} className="btn btn-primary btn-sm mx-1">
           <i className="fa fa-edit"></i>
         </a>
         <button
@@ -79,15 +77,11 @@ export default function Employees() {
   };
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.EMPLOYEES}>
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
-          <a
-            href="/AddEmployee"
-            className="btn btn-primary mx-1"
-            type="button"
-          >
+          <a href="/AddEmployee" className="btn btn-primary mx-1" type="button">
             Add
           </a>
         </div>

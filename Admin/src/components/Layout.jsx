@@ -1,6 +1,10 @@
 import Sidebar from "./Sidebar";
 
-export default function Layout({ children, title = "TechShop" }) {
+export default function Layout({
+  children,
+  title = "TechShop",
+  module = "Home",
+}) {
   window.document.title = `TechShop - ${title}`;
   return (
     <>
@@ -159,7 +163,7 @@ export default function Layout({ children, title = "TechShop" }) {
 
       <div className="main_content" id="main-content">
         {/* SIDEBAR */}
-        <Sidebar title={title} />
+        <Sidebar module={module} />
 
         {/* MAINPAGE */}
         <div className="page">{children}</div>

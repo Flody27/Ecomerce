@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { MODULES } from "../../Enums/ModuleEnums";
 import Layout from "../../components/Layout";
 import { Create, Get } from "../../Services/Api";
 import { object, string, number, array } from "yup";
@@ -147,7 +148,7 @@ export default function AddProduct() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.PRODUCTS}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">

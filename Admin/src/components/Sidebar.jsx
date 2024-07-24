@@ -1,4 +1,6 @@
-export default function Sidebar({ title }) {
+import { MODULES } from "../Enums/ModuleEnums";
+
+export default function Sidebar({ module }) {
   return (
     <>
       <div className="left_sidebar">
@@ -14,14 +16,14 @@ export default function Sidebar({ title }) {
           </div>
           <ul id="main-menu" className="metismenu">
             <li className="g_heading">Main menu</li>
-            <li className={title === "TechShop" ? "active" : ""}>
+            <li className={module == MODULES.HOME ? "active" : ""}>
               <a href="/">
                 <i className="ti-home" />
                 <span>Home</span>
               </a>
             </li>
             <li className="g_heading">E-Commerce</li>
-            <li className={title === "Productos" ? "active" : ""}>
+            <li className={module === MODULES.PRODUCTS ? "active" : ""}>
               <a href="/Products">
                 <i className="ti-package"></i>
                 Products
@@ -29,7 +31,9 @@ export default function Sidebar({ title }) {
             </li>
             <li
               className={
-                title == "Clientes" || title == "Empleados" ? "active" : ""
+                module == MODULES.CUSTOMERS || module == MODULES.EMPLOYEES
+                  ? "active"
+                  : ""
               }
             >
               <a href="#" className="has-arrow">
@@ -37,44 +41,46 @@ export default function Sidebar({ title }) {
                 <span>Users</span>
               </a>
               <ul className="options-sidebar-menu">
-                <li className={title == "Clientes" ? "active" : ""}>
+                <li className={module == MODULES.CUSTOMERS ? "active" : ""}>
                   <a href="/Customers">Customers</a>
                 </li>
-                <li className={title == "Empleados" ? "active" : ""}>
+                <li className={module == MODULES.EMPLOYEES ? "active" : ""}>
                   <a href="/Employees">Employees</a>
                 </li>
               </ul>
             </li>
-            <li>
-              <a href="">
+            <li className={module == MODULES.ORDERS ? "active" : ""}>
+              <a href="/Orders">
                 <i className="ti-shopping-cart"></i>Orders
               </a>
             </li>
             <li
               className={
-                title == "Ventas" || title == "Reembolso" ? "active" : ""
-              } 
+                module == MODULES.SALES || module == MODULES.REFUNDS
+                  ? "active"
+                  : ""
+              }
             >
               <a href="#" className="has-arrow">
                 <i className="ti-money"></i>
                 <span>Sales</span>
               </a>
               <ul className="options-sidebar-menu">
-                <li className={title == "Ventas" ? "active" : ""}>
-                  <a href="">Sales</a>
+                <li className={module == MODULES.SALES ? "active" : ""}>
+                  <a href="/Sales">Sales</a>
                 </li>
-                <li className={title == "Reembolso" ? "active" : ""}>
-                  <a href="">Refunds</a>
+                <li className={module == MODULES.REFUNDS ? "active" : ""}>
+                  <a href="/Refunds">Refunds</a>
                 </li>
               </ul>
             </li>
             <li className="g_heading">Admin</li>
-            <li className={title == "Roles" ? "active" : ""}>
+            <li className={module == MODULES.ROLES ? "active" : ""}>
               <a href="/Roles">
                 <i className="ti-lock"></i>Roles
               </a>
             </li>
-            <li className={title == "Tienda" ? "active" : ""}>
+            <li className={module == MODULES.SHOPCONFIG ? "active" : ""}>
               <a href="">
                 <i className="ti-bag"></i>Tienda
               </a>

@@ -1,4 +1,5 @@
 import Layout from "../../components/Layout";
+import { MODULES } from "../../Enums/ModuleEnums";
 import { useState } from "react";
 import { Create } from "../../Services/Api";
 import { object, string, number, date } from "yup";
@@ -74,7 +75,7 @@ export default function AddEmployee() {
     }
   }
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.EMPLOYEES}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">

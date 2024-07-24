@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
+import { MODULES } from "../../Enums/ModuleEnums";
 import { Get, Remove, Create } from "../../Services/Api";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -147,7 +148,7 @@ export default function Roles() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.ROLES}>
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">

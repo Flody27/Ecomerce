@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MODULES } from "../../Enums/ModuleEnums";
 import Layout from "../../components/Layout";
 import { Get, Remove } from "../../Services/Api";
 import Swal from "sweetalert2";
@@ -45,7 +46,7 @@ export default function Products() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.PRODUCTS}>
       {/* Page Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
@@ -133,7 +134,7 @@ export default function Products() {
                   <div className="m-1" key={producto._id}>
                     <div className="card prod-card" style={{ width: "14rem" }}>
                       <a
-                        href={`/Producto/${producto._id}`}
+                        href={`/Product/${producto._id}`}
                         className="product-link"
                       >
                         <img

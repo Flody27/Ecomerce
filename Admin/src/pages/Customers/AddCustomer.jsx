@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import Layout from "../../components/Layout";
+import { MODULES } from "../../Enums/ModuleEnums";
 import { useState } from "react";
 import { Create } from "../../Services/Api";
 import { object, string, number, array } from "yup";
@@ -146,7 +147,7 @@ export default function AddCustomer() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.CUSTOMERS}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">

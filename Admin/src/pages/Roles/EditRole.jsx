@@ -2,6 +2,7 @@ import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import { Get, GetById, Update } from "../../Services/Api";
 import Swal from "sweetalert2";
+import { MODULES } from "../../Enums/ModuleEnums";
 
 export default function EditRole() {
   const title = "Editar Rol";
@@ -103,7 +104,7 @@ export default function EditRole() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.ROLES}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { GetById, Update } from "../../Services/Api";
 import { object, string, number, date } from "yup";
 import Swal from "sweetalert2";
+import { MODULES } from "../../Enums/ModuleEnums";
 
 export default function EditEmployee() {
   const title = "Edit Employee";
@@ -80,7 +81,7 @@ export default function EditEmployee() {
   }
 
   return (
-    <Layout title={title}>
+    <Layout title={title} module={MODULES.EMPLOYEES}>
       <div className="container-fluid">
         <div className="row clearfix d-flex justify-content-center">
           <div className="col-lg-9 col-md-9 col-sm-9">
