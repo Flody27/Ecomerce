@@ -19576,3 +19576,64 @@ body *:hover::-webkit-scrollbar-thumb {
 .resource-card i {
     font-size: small;
 }
+
+/* LOGIN FORM */
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.vh-100 {
+    min-height: 100vh;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.step-indicator {
+    position: relative;
+}
+
+.step-indicator ul {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 100%;
+}
+
+.step-indicator ul::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    z-index: 1;
+}
+
+.step-item {
+    width: 30px;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.step-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.step-item:not(:last-child) {
+    margin-right: calc((100% - 90px) / 2);
+    /* Adjust this value based on the number of steps */
+}

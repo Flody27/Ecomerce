@@ -20,5 +20,9 @@ export async function Update(url, object) {
 
 export async function Remove(url, id, object = []) {
   const data = object;
-  return await axios.delete(`${baseUrl}${url}/${id}`, {data});
+  return await axios.delete(`${baseUrl}${url}/${id}`, { data });
+}
+
+export async function PostUsingCookies(url, object = "") {
+  await axios.post(`${baseUrl}${url}`, object, { withCredentials: true });
 }

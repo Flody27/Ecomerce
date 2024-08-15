@@ -1,4 +1,8 @@
 import Sidebar from "./Sidebar";
+import axios from "axios";
+
+// import { UseSessionUser } from "../Context/Session";
+// import { useState } from "react";
 
 export default function Layout({
   children,
@@ -6,6 +10,24 @@ export default function Layout({
   module = "Home",
 }) {
   window.document.title = `TechShop - ${title}`;
+  const baseUrl = import.meta.env.VITE_API_URL;
+  // const session = UseSessionUser();
+
+  // useState(() => {
+  //   if (session.user == null) window.location = "/Login";
+  // });
+
+  async function LogOut() {
+    await axios
+      .post(`${baseUrl}/Logout`, {}, { withCredentials: true })
+      .then(() => {
+        window.location.href = "/Login";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       {/* NAV */}
@@ -150,10 +172,14 @@ export default function Layout({
                     Settings
                   </a>
                   <div className="dropdown-divider" role="presentation" />
-                  <a className="dropdown-item" href="#">
+                  <button
+                    type="button"
+                    className="dropdown-item"
+                    onClick={LogOut}
+                  >
                     <i className="fa fa-sign-out text-primary" />
                     Sign out
-                  </a>
+                  </button>
                 </div>
               </li>
             </ul>
