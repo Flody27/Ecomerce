@@ -1,45 +1,23 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 // Products
-import Products from "./pages/Products/Products";
-import AddProduct from "./pages/Products/AddProduct";
-import EditProduct from "./pages/Products/EditProduct";
-import ProductPreview from "./pages/Products/ProductPreview";
+import { Products, AddProduct, EditProduct, ProductPreview } from "./pages/Products/Index";
 // Customers
-import Customers from "./pages/Customers/Customers";
-import AddCustomer from "./pages/Customers/AddCustomer";
-import EditCustomer from "./pages/Customers/EditCustomer";
-import InfoCustomer from "./pages/Customers/InfoCustomer";
+import {Customers,AddCustomer,EditCustomer,InfoCustomer} from "./pages/Customers/Index";
 // Employees
-import Employees from "./pages/Employees/Employees";
-import AddEmployee from "./pages/Employees/AddEmployee";
-import EditEmployee from "./pages/Employees/EditEmployee";
-import InfoEmployee from "./pages/Employees/InfoEmployee";
+import {Employees, AddEmployee, EditEmployee, InfoEmployee} from "./pages/Employees/Index";
 // Roles
-import Roles from "./pages/Roles/Roles";
-import AddRole from "./pages/Roles/AddRole";
-import EditRole from "./pages/Roles/EditRole";
-import Role from "./pages/Roles/Role";
+import { Roles, AddRole, EditRole, Role } from "./pages/Roles/Index";
 // Orders
-import Orders from "./pages/Orders/Orders";
-import AddOrder from "./pages/Orders/AddOrder";
-import EditOrder from "./pages/Orders/EditOder";
-import Order from "./pages/Orders/Order";
+import { Orders, AddOrder, EditOrder, Order } from "./pages/Orders/Index";
 // Refunds
-import Refunds from "./pages/Refunds/Refunds";
-import AddRefund from "./pages/Refunds/AddRefund";
-import EditRefund from "./pages/Refunds/EditRefund";
-import Refund from "./pages/Refunds/Refund";
+import { Refunds, AddRefund, EditRefund, Refund } from "./pages/Refunds/Index";
 // Sales
-import Sales from "./pages/Sales/Sales";
-import AddSale from "./pages/Sales/AddSale";
-import EditSale from "./pages/Sales/EditSale";
-import Sale from "./pages/Sales/Sale";
-
-import { UserProvider } from "./Context/Session";
-
+import { Sales, AddSale, EditSale, Sale } from "./pages/Sales/Index";
 // Auth
 import Login from "./pages/Auth/Login";
+// Sesion Context
+import { UserProvider } from "./Context/Session";
 
 function App() {
   return (
