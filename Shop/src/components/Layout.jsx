@@ -7,9 +7,8 @@ import {
 } from "../assets/Icons";
 
 export default function Layout({ children }) {
-  // TODO: Declarar paleta de colores para crear los hover
   const liStyle =
-    "font-poppins font-normal cursor-pointer text-[16px] hover:text-primaryBlue";
+    "font-poppins font-normal cursor-pointer text-[16px] hover:text-thcShpBlue";
   const [menu, setMenu] = useState(false);
   const [showCart, setShowCart] = useState(false);
 
@@ -150,7 +149,7 @@ export default function Layout({ children }) {
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4">
                     <button
                       type="button"
-                      className="bg-primaryBlue text-white rounded-[5px] p-2 w-full hover:bg-cyan-900"
+                      className="bg-thcShpBlue text-white rounded-[5px] p-2 w-full hover:bg-tchShpDarkBlue"
                     >
                       <a href="#">Shopping Cart</a>
                     </button>
@@ -162,6 +161,7 @@ export default function Layout({ children }) {
         </div>
       </div>
       {children}
+      {/* TODO Footer */}
     </>
   );
 }

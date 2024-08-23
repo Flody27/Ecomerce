@@ -4,7 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryBlue: "#2A678C",
+        thcShpBlue: "#2A678C",
+        tchShpWhite: "#F4F7FA",
+        tchShpLigthBlue: "#4B8FAB",
+        tchShpDarkBlue: "#164E63",
+        tchShpDarkBg: "#121212",
+        tchShpDarkText: "#E0E0E0",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
