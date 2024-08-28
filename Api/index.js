@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.use(
   cors({
+    //TODO: Usar variable de entorno
     origin: "http://localhost:5173",
     credentials: true,
   })

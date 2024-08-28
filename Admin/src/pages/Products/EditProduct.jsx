@@ -6,6 +6,8 @@ import axios from "axios";
 import { object, string, number, array } from "yup";
 import { MODULES } from "../../Enums/ModuleEnums";
 
+// TODO: Restructurar logica del editar las imagenes
+
 export default function EditProduct() {
   const title = "Editar Producto";
   const [imagesUI, setImagesUI] = useState([]);
@@ -81,11 +83,13 @@ export default function EditProduct() {
 
   function DeleteImage(index) {
     setImagesUI((img) => img.filter((_, i) => i !== index));
+    if (ogImages.includes(product.images[index])) {
+      setDeleteImages((img) => img.concat(product.images[index]));
+    }
     setProduct({
       ...product,
       images: product.images.filter((_, i) => i !== index),
     });
-    setDeleteImages((img) => img.concat(product.images[index]));
   }
 
   function AddTag(event) {

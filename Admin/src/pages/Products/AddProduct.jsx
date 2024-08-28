@@ -71,7 +71,6 @@ export default function AddProduct() {
     const imagesArray = filesArray.map((file) => {
       return URL.createObjectURL(file);
     });
-    console.log(filesArray);
     setImagesUI((img) => img.concat(imagesArray));
     setProduct({ ...product, images: filesArray });
   }
@@ -251,9 +250,7 @@ export default function AddProduct() {
                   <small>Select a category</small>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>
-                    Tags
-                  </b>
+                  <b>Tags</b>
                   <input
                     type="text"
                     className="form-control"
