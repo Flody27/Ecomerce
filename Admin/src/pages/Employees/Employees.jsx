@@ -1,5 +1,7 @@
 import Layout from "../../components/Layout";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
 import Table from "../../components/Table";
 import { Get, Remove } from "../../Services/Api";
 import { useEffect, useState } from "react";
@@ -8,6 +10,28 @@ import Swal from "sweetalert2";
 export default function Employees() {
   const title = "Employees";
   const [employees, setEmployees] = useState([]);
+  const session = UseSessionUser();
+  const [actions, setActions] = useState({
+    add: false,
+    edit: false,
+    details: false,
+    delete: false,
+  });
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.ACCESS)) {
+        return (window.location.href = "/");
+      }
+
+      setActions({
+        add: session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.CREATE),
+        edit: session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.EDIT),
+        details: session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.DETAILS),
+        delete: session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.DELETE),
+      });
+    }
+  }, [session]);
 
   useEffect(() => {
     Get("/getUsers").then((data) => {
@@ -31,6 +55,10 @@ export default function Employees() {
   ];
 
   function deleteEmployee(id) {
+    if (actions.delete) {
+      return;
+    }
+
     Swal.fire({
       title: "Are you sure about this action?",
       text: "This information wil be delete",
@@ -57,21 +85,36 @@ export default function Employees() {
   const Options = (id) => {
     return (
       <>
-        <a href={`/EditEmployee/${id}`} className="btn btn-primary btn-sm mx-1">
-          <i className="fa fa-edit"></i>
-        </a>
-        <button
-          type="button"
-          onClick={() => {
-            deleteEmployee(id);
-          }}
-          className="btn btn-danger btn-sm mx-1"
-        >
-          <i className="fa fa-trash-o"></i>
-        </button>
-        <a href={`/Employee/${id}`} className="btn btn-success btn-sm mx-1">
-          <i className="fa fa-eye"></i>
-        </a>
+        {actions.edit ? (
+          <a
+            href={`/EditEmployee/${id}`}
+            className="btn btn-primary btn-sm mx-1"
+          >
+            <i className="fa fa-edit"></i>
+          </a>
+        ) : (
+          ""
+        )}
+        {actions.delete ? (
+          <button
+            type="button"
+            onClick={() => {
+              deleteEmployee(id);
+            }}
+            className="btn btn-danger btn-sm mx-1"
+          >
+            <i className="fa fa-trash-o"></i>
+          </button>
+        ) : (
+          ""
+        )}
+        {actions.details ? (
+          <a href={`/Employee/${id}`} className="btn btn-success btn-sm mx-1">
+            <i className="fa fa-eye"></i>
+          </a>
+        ) : (
+          ""
+        )}
       </>
     );
   };
@@ -81,9 +124,17 @@ export default function Employees() {
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand">{title}</a>
         <div className="ml-auto">
-          <a href="/AddEmployee" className="btn btn-primary mx-1" type="button">
-            Add
-          </a>
+          {actions.add ? (
+            <a
+              href="/AddEmployee"
+              className="btn btn-primary mx-1"
+              type="button"
+            >
+              Add
+            </a>
+          ) : (
+            ""
+          )}
         </div>
       </nav>
       <div className="container-fluid">

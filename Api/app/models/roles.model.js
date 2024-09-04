@@ -5,10 +5,11 @@ const rolesSchema = mongoose.Schema(
     roleName: {
       type: String,
       required: [true, "The name of the role is required."],
+      unique: true,
     },
     resources: [
       {
-        resource: { type: String, unique: true },
+        resource: { type: String },
         actions: [
           {
             type: String,

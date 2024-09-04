@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const TOKEN = process.env.JWT_SECRET;
 const ENV = process.env.NODE_ENV;
+// Validar acciones desde el backend roles
 
 exports.singup = async (req, res) => {
   const { name, lastName, email, password } = req.body;
@@ -65,7 +66,12 @@ exports.login = async (req, res) => {
       });
 
     const token = jwt.sign(
-      { id: userFound._id, name: userFound.name, lastName: userFound.lastName },
+      {
+        id: userFound._id,
+        name: userFound.name,
+        lastName: userFound.lastName,
+        role: userFound.role,
+      },
       TOKEN,
       {
         expiresIn: "1h",

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Get, Create } from "../../Services/Api";
 import Swal from "sweetalert2";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
 
 export default function AddRole() {
   const title = "Add role";
@@ -12,11 +14,26 @@ export default function AddRole() {
   });
   const [resource, setResource] = useState({
     resource: "Select a resource",
-    actions: [],
+    actions: ["access"],
   });
 
-  const actions = ["access", "details", "edit", "create", "delete"];
+  const actions = ["details", "edit", "create", "delete"];
   const [resourcesList, setResourcesList] = useState([]);
+  const session = UseSessionUser();
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.ROLES, ACTIONS.CREATE)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
+
+  useEffect(() => {
+    Get("/getResources").then((data) => {
+      setResourcesList(data.data);
+    });
+  }, []);
 
   const HandleInputChange = (event) => {
     setRole({ ...role, [event.target.name]: event.target.value });
@@ -37,12 +54,6 @@ export default function AddRole() {
       actions: resource.actions.concat(value),
     });
   };
-
-  useEffect(() => {
-    Get("/getResources").then((data) => {
-      setResourcesList(data.data);
-    });
-  }, []);
 
   const GrantResource = () => {
     if (
@@ -67,7 +78,7 @@ export default function AddRole() {
   };
 
   function CleanResourceForm() {
-    setResource({ resource: "Select a resource", actions: [] });
+    setResource({ resource: "Select a resource", actions: ["access"] });
     actions.forEach((action) => {
       document.getElementById(action).checked = false;
     });
@@ -182,6 +193,10 @@ export default function AddRole() {
                   >
                     Assign resource
                   </button>
+                  <span className="d-block my-2">
+                    <i className="fa fa-warning mx-1"></i>
+                    By default, the action access will be assigned.
+                  </span>
                   <hr />
                 </div>
                 {role.resources == 0 ? (

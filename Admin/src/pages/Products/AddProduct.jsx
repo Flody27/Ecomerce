@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
 import Layout from "../../components/Layout";
 import { Create, Get } from "../../Services/Api";
+import { UseSessionUser } from "../../Context/Session";
 import { object, string, number, array } from "yup";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -13,6 +15,7 @@ export default function AddProduct() {
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tag, setTag] = useState("");
+  const session = UseSessionUser();
 
   const [product, setProduct] = useState({
     name: "",
@@ -47,6 +50,14 @@ export default function AddProduct() {
     images: array().min(1, "You must add at least one image"),
     tags: array(),
   });
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.CREATE)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
 
   useEffect(() => {
     GetCategories();
@@ -251,9 +262,7 @@ export default function AddProduct() {
                   <small>Select a category</small>
                 </div>
                 <div className="form-group mb-3 col-12">
-                  <b>
-                    Tags
-                  </b>
+                  <b>Tags</b>
                   <input
                     type="text"
                     className="form-control"

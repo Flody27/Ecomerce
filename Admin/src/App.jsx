@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 // Products
-import { Products, AddProduct, EditProduct, ProductPreview } from "./pages/Products/Index";
+import {Products,AddProduct,EditProduct,ProductPreview} from "./pages/Products/Index";
 // Customers
 import {Customers,AddCustomer,EditCustomer,InfoCustomer} from "./pages/Customers/Index";
 // Employees
-import {Employees, AddEmployee, EditEmployee, InfoEmployee} from "./pages/Employees/Index";
+import {Employees,AddEmployee,EditEmployee,InfoEmployee} from "./pages/Employees/Index";
 // Roles
 import { Roles, AddRole, EditRole, Role } from "./pages/Roles/Index";
 // Orders
@@ -18,6 +18,7 @@ import { Sales, AddSale, EditSale, Sale } from "./pages/Sales/Index";
 import Login from "./pages/Auth/Login";
 // Sesion Context
 import { UserProvider } from "./Context/Session";
+import { RequiredAuth } from "./Services/RequiredAuth";
 
 function App() {
   return (
@@ -25,48 +26,251 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<Home />} path="/" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Home />
+                </RequiredAuth>
+              }
+              path="/"
+            />
             {/* Products */}
-            <Route element={<Products />} path="/Products" />
-            <Route element={<AddProduct />} path="/AddProduct" />
-            <Route element={<EditProduct />} path="/EditProduct/:id" />
-            <Route element={<ProductPreview />} path="/Product/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Products />
+                </RequiredAuth>
+              }
+              path="/Products"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddProduct />
+                </RequiredAuth>
+              }
+              path="/AddProduct"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditProduct />
+                </RequiredAuth>
+              }
+              path="/EditProduct/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <ProductPreview />
+                </RequiredAuth>
+              }
+              path="/Product/:id"
+            />
 
             {/* Customers */}
-            <Route element={<Customers />} path="/Customers" />
-            <Route element={<AddCustomer />} path="/AddCustomer" />
-            <Route element={<EditCustomer />} path="/EditCustomer/:id" />
-            <Route element={<InfoCustomer />} path="/Customer/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Customers />
+                </RequiredAuth>
+              }
+              path="/Customers"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddCustomer />
+                </RequiredAuth>
+              }
+              path="/AddCustomer"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditCustomer />
+                </RequiredAuth>
+              }
+              path="/EditCustomer/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <InfoCustomer />
+                </RequiredAuth>
+              }
+              path="/Customer/:id"
+            />
 
             {/* Employees */}
-            <Route element={<Employees />} path="/Employees" />
-            <Route element={<AddEmployee />} path="/AddEmployee" />
-            <Route element={<EditEmployee />} path="/EditEmployee/:id" />
-            <Route element={<InfoEmployee />} path="/Employee/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Employees />
+                </RequiredAuth>
+              }
+              path="/Employees"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddEmployee />
+                </RequiredAuth>
+              }
+              path="/AddEmployee"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditEmployee />
+                </RequiredAuth>
+              }
+              path="/EditEmployee/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <InfoEmployee />
+                </RequiredAuth>
+              }
+              path="/Employee/:id"
+            />
 
             {/* Roles */}
-            <Route element={<Roles />} path="/Roles" />
-            <Route element={<AddRole />} path="/AddRole" />
-            <Route element={<EditRole />} path="/EditRole/:id" />
-            <Route element={<Role />} path="/Role/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Roles />
+                </RequiredAuth>
+              }
+              path="/Roles"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddRole />
+                </RequiredAuth>
+              }
+              path="/AddRole"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditRole />
+                </RequiredAuth>
+              }
+              path="/EditRole/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Role />
+                </RequiredAuth>
+              }
+              path="/Role/:id"
+            />
 
             {/* Orders */}
-            <Route element={<Orders />} path="/Orders" />
-            <Route element={<AddOrder />} path="/AddOrder" />
-            <Route element={<EditOrder />} path="/EditOrder/:id" />
-            <Route element={<Order />} path="/Order/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Orders />
+                </RequiredAuth>
+              }
+              path="/Orders"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddOrder />
+                </RequiredAuth>
+              }
+              path="/AddOrder"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditOrder />
+                </RequiredAuth>
+              }
+              path="/EditOrder/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Order />
+                </RequiredAuth>
+              }
+              path="/Order/:id"
+            />
 
             {/* Refunds */}
-            <Route element={<Refunds />} path="/Refunds" />
-            <Route element={<AddRefund />} path="/AddRefund" />
-            <Route element={<EditRefund />} path="/EditRefund/:id" />
-            <Route element={<Refund />} path="/Refund/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Refunds />
+                </RequiredAuth>
+              }
+              path="/Refunds"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddRefund />
+                </RequiredAuth>
+              }
+              path="/AddRefund"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditRefund />
+                </RequiredAuth>
+              }
+              path="/EditRefund/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Refund />
+                </RequiredAuth>
+              }
+              path="/Refund/:id"
+            />
 
             {/* Sales */}
-            <Route element={<Sales />} path="/Sales" />
-            <Route element={<AddSale />} path="/AddSale" />
-            <Route element={<EditSale />} path="/EditSale/:id" />
-            <Route element={<Sale />} path="/Sale/:id" />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Sales />
+                </RequiredAuth>
+              }
+              path="/Sales"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <AddSale />
+                </RequiredAuth>
+              }
+              path="/AddSale"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <EditSale />
+                </RequiredAuth>
+              }
+              path="/EditSale/:id"
+            />
+            <Route
+              element={
+                <RequiredAuth>
+                  <Sale />
+                </RequiredAuth>
+              }
+              path="/Sale/:id"
+            />
 
             {/* Auth */}
             <Route element={<Login />} path="/Login" />

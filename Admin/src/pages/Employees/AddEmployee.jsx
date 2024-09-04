@@ -1,12 +1,15 @@
 import Layout from "../../components/Layout";
 import { MODULES } from "../../Enums/ModuleEnums";
-import { useState } from "react";
-import { Create } from "../../Services/Api";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
+import { useState, useEffect } from "react";
+import { Create, Get } from "../../Services/Api";
 import { object, string, number, date } from "yup";
 import Swal from "sweetalert2";
 
 export default function AddEmployee() {
   const title = "Add Employee";
+  const session = UseSessionUser();
   const [employee, setEmployee] = useState({
     name: "",
     lastName: "",
@@ -15,8 +18,24 @@ export default function AddEmployee() {
     position: "",
     salary: 0,
     startDate: "",
+    role: "",
     userType: "employee",
   });
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.EMPLOYEES, ACTIONS.CREATE)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
+
+  useEffect(() => {
+    Get("/GetRoles").then((data) => {
+      setRoles(data.data);
+    });
+  }, []);
 
   const schemaEmployee = object().shape({
     name: string()
@@ -41,6 +60,7 @@ export default function AddEmployee() {
     startDate: date()
       .required("The hire date field is required.")
       .typeError("Incorrect value in the hire date field."),
+    role: string().required("The role is required"),
   });
 
   const HandleInputChange = (event) => {
@@ -48,7 +68,6 @@ export default function AddEmployee() {
   };
 
   async function HandleSubmit() {
-    
     try {
       await schemaEmployee.validate(employee, { abortEarly: false });
 
@@ -75,6 +94,7 @@ export default function AddEmployee() {
       }
     }
   }
+
   return (
     <Layout title={title} module={MODULES.EMPLOYEES}>
       <div className="container-fluid">
@@ -160,6 +180,28 @@ export default function AddEmployee() {
                   />
                   <small>Required</small>
                 </div>
+
+                <div className="form-group mb-3 col-12">
+                  <b>Role</b>
+                  <select
+                    name="roles"
+                    className="form-control"
+                    id="roles"
+                    defaultValue="none"
+                    onChange={(e) => {
+                      setEmployee({ ...employee, role: e.target.value });
+                    }}
+                  >
+                    <option value="none" disabled>
+                      Select a role
+                    </option>
+                    {roles.map((role) => (
+                      <option key={role._id}>{role.roleName}</option>
+                    ))}
+                  </select>
+                  <small>Required</small>
+                </div>
+
                 <div className="form-group mb-3 col-12">
                   <b>Hire date</b>
                   <input
@@ -173,6 +215,7 @@ export default function AddEmployee() {
                   />
                   <small>Required</small>
                 </div>
+
                 <div className="col-12">
                   <button
                     type="button"

@@ -1,8 +1,8 @@
+// import { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 
 // import { UseSessionUser } from "../Context/Session";
-// import { useState } from "react";
 
 export default function Layout({
   children,
@@ -13,9 +13,9 @@ export default function Layout({
   const baseUrl = import.meta.env.VITE_API_URL;
   // const session = UseSessionUser();
 
-  // useState(() => {
-  //   if (session.user == null) window.location = "/Login";
-  // });
+  // useEffect(() => {
+  //   if (session.user.id === "") window.location = "/Login";
+  // }, [session]);
 
   async function LogOut() {
     await axios

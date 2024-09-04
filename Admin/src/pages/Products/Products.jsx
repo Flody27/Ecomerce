@@ -1,17 +1,40 @@
 import { useEffect, useState } from "react";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
 import Layout from "../../components/Layout";
 import { Get, Remove } from "../../Services/Api";
 import Swal from "sweetalert2";
-
+import { UseSessionUser } from "../../Context/Session";
 export default function Products() {
   const title = "Products";
   const [productos, setProducts] = useState([]);
   const baseUrl = import.meta.env.VITE_API_URL;
+  const session = UseSessionUser();
+  const [actions, setActions] = useState({
+    add: false,
+    edit: false,
+    details: false,
+    delete: false,
+  });
 
   useEffect(() => {
     getProducts();
   }, []);
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.ACCESS)) {
+        return (window.location.href = "/");
+      }
+
+      setActions({
+        add: session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.CREATE),
+        edit: session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.EDIT),
+        details: session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.DETAILS),
+        delete: session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.DELETE),
+      });
+    }
+  }, [session]);
 
   async function getProducts() {
     await Get("/getProducts").then((data) => {
@@ -20,6 +43,10 @@ export default function Products() {
   }
 
   function deleteProduct(id, images) {
+    if (!actions.delete) {
+      return;
+    }
+
     Swal.fire({
       title: "Are you sure to delete this product?",
       showDenyButton: true,
@@ -54,13 +81,17 @@ export default function Products() {
           <button className="btn btn-secondary mx-1" type="button">
             Export
           </button>
-          <a
-            href="/AddProduct"
-            className="btn btn-primary mx-1"
-            type="button"
-          >
-            Add
-          </a>
+          {actions.add ? (
+            <a
+              href="/AddProduct"
+              className="btn btn-primary mx-1"
+              type="button"
+            >
+              Add
+            </a>
+          ) : (
+            ""
+          )}
         </div>
       </nav>
 
@@ -134,7 +165,9 @@ export default function Products() {
                   <div className="m-1" key={producto._id}>
                     <div className="card prod-card" style={{ width: "14rem" }}>
                       <a
-                        href={`/Product/${producto._id}`}
+                        href={`${
+                          actions.details ? "/Product/" + producto._id : ""
+                        }`}
                         className="product-link"
                       >
                         <img
@@ -145,7 +178,9 @@ export default function Products() {
                       </a>
                       <div className="card-body">
                         <a
-                          href={`/${producto.name}/${producto._id}`}
+                          href={`${
+                            actions.details ? "/Product/" + producto._id : ""
+                          }`}
                           className="product-link"
                         >
                           <h5>{producto.name}</h5>
@@ -153,20 +188,28 @@ export default function Products() {
                           <p>Quantity: {producto.quantity}</p>
                         </a>
                         <div className="row d-flex justify-content-center">
-                          <a
-                            href={`/EditProduct/${producto._id}`}
-                            className="btn btn-sm btn-outline-dark col-5 mx-1"
-                          >
-                            Edit
-                          </a>
-                          <button
-                            className="btn btn-sm btn-outline-danger col-5 mx-1"
-                            onClick={() => {
-                              deleteProduct(producto._id, producto.images);
-                            }}
-                          >
-                            Delete
-                          </button>
+                          {actions.edit ? (
+                            <a
+                              href={`/EditProduct/${producto._id}`}
+                              className="btn btn-sm btn-outline-dark col-5 mx-1"
+                            >
+                              Edit
+                            </a>
+                          ) : (
+                            ""
+                          )}
+                          {actions.delete ? (
+                            <button
+                              className="btn btn-sm btn-outline-danger col-5 mx-1"
+                              onClick={() => {
+                                deleteProduct(producto._id, producto.images);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     </div>

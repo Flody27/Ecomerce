@@ -1,9 +1,11 @@
 const roleModel = require("../models/roles.model");
 const resourcesModel = require("../models/resources.model");
 
+// TODO: Complicar la creacion de usuarios super admin
+
 exports.getRoles = async (req, res) => {
   roleModel
-    .find()
+    .find({ roleName: { $ne: "SuperAdmin" } })
     .then((result) => {
       console.log("Listing roles.");
       res.send(result);
@@ -27,6 +29,20 @@ exports.getRoleByID = async (req, res) => {
       console.log("There was an error getting the roles.", err);
       res.status(500).send({
         message: err.message || "There was an error getting the roles.",
+      });
+    });
+};
+
+exports.getRoleByName = async (req, res) => {
+  roleModel
+    .find({ roleName: { $eq: req.params.name } })
+    .then((result) => {
+      res.send(result[0]);
+    })
+    .catch((err) => {
+      console.log("There was an error getting the role.", err);
+      res.status(500).send({
+        message: err.message || "There was an error getting the role.",
       });
     });
 };
@@ -97,39 +113,6 @@ exports.getResources = async (req, res) => {
       console.error("There was an error getting the resources.", err);
       res.status(500).send({
         message: err.message || "There was an error getting the resources.",
-      });
-    });
-};
-
-exports.createResource = async (req, res) => {
-  const { resource } = req.body;
-
-  const x = new resourcesModel({ resource });
-
-  x.save()
-    .then(() => {
-      console.log("Registering .");
-      res.send({ message: "Resource successfully registered." });
-    })
-    .catch((err) => {
-      console.log("There was an error registering the resource.", err);
-      res.status(500).send({
-        message: err.message || "There was an error registering the resource.",
-      });
-    });
-};
-
-exports.deleteResoruce = async (req, res) => {
-  resourcesModel
-    .findByIdAndDelete(req.params.id)
-    .then(() => {
-      console.log("deleting the .");
-      res.send({ message: "The resource was successfully deleted." });
-    })
-    .catch((err) => {
-      console.log("There was an error deleting the resource.", err);
-      res.status(500).send({
-        message: err.message || "There was an error deleting the resource.",
       });
     });
 };

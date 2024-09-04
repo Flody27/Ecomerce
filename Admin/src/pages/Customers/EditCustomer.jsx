@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import Layout from "../../components/Layout";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
 import { useEffect, useState } from "react";
 import { GetById, Update } from "../../Services/Api";
 import { object, string, number, array } from "yup";
@@ -8,6 +10,7 @@ import Swal from "sweetalert2";
 
 export default function EditCustomer() {
   const title = "Editar Cliente";
+  const session = UseSessionUser();
   const customerId = window.location.pathname.split("/")[2];
   const [customer, setCustomer] = useState({
     name: "",
@@ -17,6 +20,14 @@ export default function EditCustomer() {
     address: [],
     userType: "customer",
   });
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.CUSTOMERS, ACTIONS.EDIT)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
 
   const schemaCustomer = object().shape({
     name: string()

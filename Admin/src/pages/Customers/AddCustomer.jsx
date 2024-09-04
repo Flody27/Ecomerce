@@ -1,13 +1,24 @@
 /* eslint-disable no-undef */
 import Layout from "../../components/Layout";
 import { MODULES } from "../../Enums/ModuleEnums";
-import { useState } from "react";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
+import { useState, useEffect } from "react";
 import { Create } from "../../Services/Api";
 import { object, string, number, array } from "yup";
 import Swal from "sweetalert2";
 
 export default function AddCustomer() {
   const title = "Add Customer";
+  const session = UseSessionUser();
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.CUSTOMERS, ACTIONS.CREATE)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
 
   const [customer, setCustomer] = useState({
     name: "",

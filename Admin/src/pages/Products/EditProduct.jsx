@@ -1,6 +1,8 @@
 import Layout from "../../components/Layout";
 import { GetById, Get, Update } from "../../Services/Api";
 import { useState, useEffect } from "react";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { object, string, number, array } from "yup";
@@ -8,6 +10,7 @@ import { MODULES } from "../../Enums/ModuleEnums";
 
 export default function EditProduct() {
   const title = "Editar Producto";
+  const session = UseSessionUser();
   const [imagesUI, setImagesUI] = useState([]);
   const [ogImages, setOgImages] = useState([]);
   const [deleteImages, setDeleteImages] = useState([]);
@@ -49,6 +52,14 @@ export default function EditProduct() {
     images: array().min(1, "You must add at least one image"),
     tags: array(),
   });
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.PRODUCTS, ACTIONS.EDIT)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
 
   useEffect(() => {
     GetCategories();

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Get, GetById, Update } from "../../Services/Api";
 import Swal from "sweetalert2";
 import { MODULES } from "../../Enums/ModuleEnums";
+import { ACTIONS } from "../../Enums/ActionsEnums";
+import { UseSessionUser } from "../../Context/Session";
 
 export default function EditRole() {
   const title = "Editar Rol";
@@ -13,11 +15,20 @@ export default function EditRole() {
   });
   const [resource, setResource] = useState({
     resource: "Select a resource",
-    actions: [],
+    actions: ["access"],
   });
 
-  const actions = ["access", "details", "edit", "create", "delete"];
+  const actions = ["details", "edit", "create", "delete"];
   const [resourcesList, setResourcesList] = useState([]);
+  const session = UseSessionUser();
+
+  useEffect(() => {
+    if (session.CanUserAccesTo) {
+      if (!session.CanUserAccesTo(MODULES.ROLES, ACTIONS.EDIT)) {
+        return (window.location.href = "/");
+      }
+    }
+  }, [session]);
 
   useEffect(() => {
     Get("/getResources").then((data) => {
@@ -71,7 +82,7 @@ export default function EditRole() {
   };
 
   function CleanResourceForm() {
-    setResource({ resource: "Select a resource", actions: [] });
+    setResource({ resource: "Select a resource", actions: ["access"] });
     actions.forEach((action) => {
       document.getElementById(action).checked = false;
     });
@@ -187,6 +198,10 @@ export default function EditRole() {
                   >
                     Assign resource
                   </button>
+                  <span className="d-block my-2">
+                    <i className="fa fa-warning mx-1"></i>
+                    By default, the action access will be assigned.
+                  </span>
                   <hr />
                 </div>
                 {role.resources == 0 ? (

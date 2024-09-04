@@ -5,6 +5,8 @@ module.exports = (app) => {
 
   app.get("/getRole/:id", controller.getRoleByID);
 
+  app.get("/getRoleName/:name", controller.getRoleByName);
+
   app.post("/addRole", controller.createRole);
 
   app.put("/editRole/:id", controller.editRole);
@@ -12,8 +14,4 @@ module.exports = (app) => {
   app.delete("/deleteRole/:id", controller.deleteRole);
 
   app.get("/getResources", controller.getResources);
-
-  app.post("/addResource", controller.createResource);
-
-  app.delete("/deleteResource/:id", controller.deleteResoruce);
 };
