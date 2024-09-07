@@ -33,7 +33,7 @@ export default function EditEmployee() {
   }, [session]);
 
   useEffect(() => {
-    GetById("/getUser", employeeId).then((data) => {
+    GetById("/getEmployee", employeeId).then((data) => {
       setEmployee(data.data);
     });
     Get("/GetRoles").then((data) => {
@@ -80,7 +80,7 @@ export default function EditEmployee() {
         startDate: new Date(employee.startDate).toISOString(),
       };
 
-      await Update(`/EditUser/${employeeId}`, updatedObject);
+      await Update(`/editEmployee/${employeeId}`, updatedObject);
       Swal.fire("Succes", "Changes successfully saved", "success").then(() => {
         window.location = "/Employees";
       });

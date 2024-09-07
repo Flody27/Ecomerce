@@ -1,13 +1,16 @@
+const sales = require("../controllers/sales.controller");
+const { HasAccess,MultiActionValidation } = require("../utils/RoleHandler");
+const {ACCESS,CREATE,DETAILS,DELETE,EDIT} = require("../enums/ActionsEnums")
+const {SALES} = require("../enums/ResourcesEnums")
+
 module.exports = (app) => {
-  const sales = require("../controllers/sales.controller");
+  app.get("/getSales",HasAccess(SALES,ACCESS), sales.getSales);
 
-  app.get("/getSales", sales.getSales);
+  app.get("/getSale/:id",MultiActionValidation(SALES,DETAILS,EDIT), sales.getSaleByID);
 
-  app.get("/getSale/:id", sales.getSaleByID);
+  app.post("/registerSale",HasAccess(SALES,CREATE), sales.registerSale);
 
-  app.post("/registerSale", sales.registerSale);
+  app.put("/editSale/:id",HasAccess(SALES,EDIT), sales.editSale);
 
-  app.put("/editSale/:id", sales.editSale);
-
-  app.delete("/deleteSale/:id", sales.deleteSale);
+  app.delete("/deleteSale/:id",HasAccess(SALES,DELETE), sales.deleteSale);
 };

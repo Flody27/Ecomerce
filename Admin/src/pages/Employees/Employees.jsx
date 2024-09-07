@@ -34,8 +34,8 @@ export default function Employees() {
   }, [session]);
 
   useEffect(() => {
-    Get("/getUsers").then((data) => {
-      setEmployees(data.data.filter((x) => x.userType == "employee"));
+    Get("/getEmployees").then((data) => {
+      setEmployees(data.data);
     });
   }, []);
 
@@ -55,7 +55,7 @@ export default function Employees() {
   ];
 
   function deleteEmployee(id) {
-    if (actions.delete) {
+    if (!actions.delete) {
       return;
     }
 
@@ -70,7 +70,7 @@ export default function Employees() {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        Remove("/deleteUser", id).then(() => {
+        Remove("/deleteEmployee", id).then(() => {
           Swal.fire({
             title: "Deleted",
             text: "Deleted successfully",

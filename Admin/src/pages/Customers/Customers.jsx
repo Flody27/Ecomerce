@@ -34,8 +34,8 @@ export default function Customers() {
   }, [session]);
 
   useEffect(() => {
-    Get("/getUsers").then((data) => {
-      setCustomers(data.data.filter((x) => x.userType == "customer"));
+    Get("/getCustomers").then((data) => {
+      setCustomers(data.data);
     });
   }, []);
 
@@ -70,7 +70,7 @@ export default function Customers() {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        Remove("/deleteUser", id).then(() => {
+        Remove("/deleteCustomer", id).then(() => {
           Swal.fire({
             title: "Deleted",
             text: "Deleted sucessfully",

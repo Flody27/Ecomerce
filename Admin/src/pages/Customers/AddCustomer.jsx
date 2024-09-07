@@ -138,7 +138,7 @@ export default function AddCustomer() {
     try {
       await schemaCustomer.validate(customer, { abortEarly: false });
 
-      await Create("/addUser", customer);
+      await Create("/addCustomer", customer);
       Swal.fire("Successfully", "Customer added successfully", "success").then(
         () => {
           window.location = "/Customers";

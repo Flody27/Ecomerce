@@ -5,18 +5,33 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const TOKEN = process.env.JWT_SECRET;
 
 const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static("Images"));
+app.use(cookieParser());
+
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static("Images"));
-app.use(cookieParser());
+
+app.use((req, res, next) => {
+  req.sesssion = null;
+  const token = req.cookies?.access_token;
+  try {
+    const data = jwt.verify(token, TOKEN);
+    req.sesssion = data;
+  } catch {}
+
+  next();
+});
 
 app.listen("8000", () => {
   console.log("Starting server in port 8000");
@@ -58,7 +73,8 @@ app.post("/upload", upload.array("images"), (req, res) => {
 require("./app/routes/product.routes")(app);
 require("./app/routes/commentProduct.routes")(app);
 require("./app/routes/categoryProduct.routes")(app);
-require("./app/routes/user.routes")(app);
+require("./app/routes/customer.routes")(app);
+require("./app/routes/employee.routes")(app);
 require("./app/routes/sales.routes")(app);
 require("./app/routes/order.routes")(app);
 require("./app/routes/refundRequest.routes")(app);

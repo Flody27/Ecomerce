@@ -1,17 +1,20 @@
+const controller = require("../controllers/roles.controller");
+const { HasAccess,MultiActionValidation,Islogged } = require("../utils/RoleHandler");
+const {ACCESS,CREATE,DETAILS,DELETE,EDIT} = require("../enums/ActionsEnums")
+const {ROLES} = require("../enums/ResourcesEnums")
+
 module.exports = (app) => {
-  const controller = require("../controllers/roles.controller");
+  app.get("/getRoles",HasAccess(ROLES,ACCESS), controller.getRoles);
 
-  app.get("/getRoles", controller.getRoles);
+  app.get("/getRole/:id",MultiActionValidation(ROLES,DETAILS,EDIT), controller.getRoleByID);
 
-  app.get("/getRole/:id", controller.getRoleByID);
+  app.get("/getRoleName/:name",Islogged(), controller.getRoleByName);
 
-  app.get("/getRoleName/:name", controller.getRoleByName);
+  app.post("/addRole",HasAccess(ROLES,CREATE), controller.createRole);
 
-  app.post("/addRole", controller.createRole);
+  app.put("/editRole/:id",HasAccess(ROLES,EDIT), controller.editRole);
 
-  app.put("/editRole/:id", controller.editRole);
+  app.delete("/deleteRole/:id",HasAccess(ROLES,DELETE), controller.deleteRole);
 
-  app.delete("/deleteRole/:id", controller.deleteRole);
-
-  app.get("/getResources", controller.getResources);
+  app.get("/getResources",HasAccess(ROLES,ACCESS), controller.getResources);
 };

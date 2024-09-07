@@ -1,9 +1,10 @@
+const commentProduct = require("../controllers/commentProduct.controller");
+const { Islogged } = require("../utils/RoleHandler");
+
 module.exports = (app) => {
-  const commentProduct = require("../controllers/commentProduct.controller");
+  app.post("/addComment",Islogged(), commentProduct.createProductComment);
 
-  app.post("/addComment", commentProduct.createProductComment);
+  app.put("/editComment/:id",Islogged(), commentProduct.editProductComment);
 
-  app.put("/editComment/:id", commentProduct.editProductComment);
-
-  app.delete("/deleteComment/:id", commentProduct.deleteProductComment);
+  app.delete("/deleteComment/:id",Islogged(), commentProduct.deleteProductComment);
 };

@@ -73,7 +73,7 @@ export default function EditCustomer() {
   });
 
   useEffect(() => {
-    GetById("/getUser", customerId).then((data) => {
+    GetById("/getCustomer", customerId).then((data) => {
       setCustomer(data.data);
     });
   }, []);
@@ -144,7 +144,7 @@ export default function EditCustomer() {
     try {
       await schemaCustomer.validate(customer, { abortEarly: false });
 
-      await Update(`/editUser/${customerId}`, customer);
+      await Update(`/editCustomer/${customerId}`, customer);
       Swal.fire("Success", "Changes successfully saved", "success").then(() => {
         window.location = "/Customers";
       });

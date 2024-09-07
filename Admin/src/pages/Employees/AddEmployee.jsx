@@ -76,7 +76,7 @@ export default function AddEmployee() {
         startDate: new Date(employee.startDate).toISOString(),
       };
 
-      await Create("/addUser", updatedObject);
+      await Create("/addEmployee", updatedObject);
       Swal.fire("Success", "Employee successfully added", "success").then(
         () => {
           window.location = "/Employees";
