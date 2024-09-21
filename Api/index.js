@@ -17,6 +17,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
+    //TODO: Usar variable de entorno
     origin: "http://localhost:5173",
     credentials: true,
   })

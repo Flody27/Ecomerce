@@ -82,7 +82,6 @@ export default function AddProduct() {
     const imagesArray = filesArray.map((file) => {
       return URL.createObjectURL(file);
     });
-    console.log(filesArray);
     setImagesUI((img) => img.concat(imagesArray));
     setProduct({ ...product, images: filesArray });
   }
