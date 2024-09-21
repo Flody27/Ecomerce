@@ -1,6 +1,9 @@
 import { Eye, ShoppingCartIcon } from "../assets/Icons";
+import { useCart } from "../hooks/useCart.js";
 
 export default function ProductCard() {
+  const { addToCart } = useCart();
+
   return (
     <div className="relative flex flex-col m-4 max-w-[250px] shadow-md">
       <div className="relative">
@@ -13,7 +16,17 @@ export default function ProductCard() {
           <button className="w-10 h-10 rounded-full hover:border-2 hover:border-white text-white flex items-center justify-center transition-colors duration-300 m-2">
             <Eye />
           </button>
-          <button className="w-10 h-10 rounded-full hover:border-2 hover:border-white text-white flex items-center justify-center transition-colors duration-300  m-2">
+          <button
+            // onClick={() => {
+            //   addToCart({
+            //     id: "1",
+            //     image: "images/phone.jpg",
+            //     title: "Name",
+            //     quantity: 0,
+            //   });
+            // }}
+            className="w-10 h-10 rounded-full hover:border-2 hover:border-white text-white flex items-center justify-center transition-colors duration-300  m-2"
+          >
             <ShoppingCartIcon />
           </button>
         </div>

@@ -10,7 +10,7 @@ export default function Home() {
       {/* Products Section */}
       <div className="flex justify-center items-start">
         <div className="xl:max-w-[1280px] w-full">
-          <section className="flex flex-wrap flex-row sm:py-16 py-6 justify-center">
+          <section className="flex flex-wrap flex-row py-6 justify-center">
             <ProductCard />
             <ProductCard />
             <ProductCard />

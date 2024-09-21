@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useCart } from "../hooks/useCart.js";
 import {
   CloseIcon,
   MenuIcon,
@@ -11,8 +12,9 @@ export default function Layout({ children }) {
     "font-poppins font-normal cursor-pointer text-[16px] hover:text-thcShpBlue";
   const [menu, setMenu] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const { cart } = useCart();
 
-  const ProductCard = () => (
+  const ProductCard = ({ id, image, title, quantity }) => (
     <div className="product-card relative flex flex-row m-4 py-3 border-t-2">
       <img
         src="/images/phone.jpg"
@@ -35,6 +37,14 @@ export default function Layout({ children }) {
       </button>
     </div>
   );
+
+  useEffect(() => {
+    document.body.style.overflow = showCart ? "hidden" : "auto";
+  }, [showCart]);
+
+  useEffect(() => {
+    document.body.style.overflow = menu ? "hidden" : "auto";
+  }, [menu]);
 
   return (
     <>
@@ -141,10 +151,9 @@ export default function Layout({ children }) {
                     </button>
                   </div>
                   <div className="cart-products flex flex-col h-[80%] overflow-auto">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {/* {cart.map((product) => (
+                      <ProductCard  key={product.id} {...product} />
+                    ))} */}
                   </div>
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4">
                     <button
